@@ -1,0 +1,125 @@
+warning: LF will be replaced by CRLF in package.json.
+The file will have its original line endings in your working directory.
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 50ec3e3..e8b4df0 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -11,6 +11,7 @@[m
+     "lodash": "^4.17.4",[m
+     "react": "16.0.0-alpha.12",[m
+     "react-native": "0.47.1",[m
+[32m+[m[32m    "react-native-communications": "^2.2.1",[m
+     "react-native-router-flux": "^3.41.0",[m
+     "react-redux": "^5.0.6",[m
+     "redux": "^3.7.2",[m
+[1mdiff --git a/src/actions/EmployeeActions.js b/src/actions/EmployeeActions.js[m
+[1mindex 1b16af7..6a1e9ff 100644[m
+[1m--- a/src/actions/EmployeeActions.js[m
+[1m+++ b/src/actions/EmployeeActions.js[m
+[36m@@ -3,7 +3,8 @@[m [mimport { Actions } from 'react-native-router-flux';[m
+ import {[m
+     EMPLOYEE_UPDATE,[m
+     EMPLOYEE_CREATE,[m
+[31m-    EMPLOYEE_FETCH_SUCCESS[m
+[32m+[m[32m    EMPLOYEE_FETCH_SUCCESS,[m
+[32m+[m[32m    EMPLOYEE_SAVE_SUCCESS[m
+ } from './types';[m
+ [m
+ export const employeeUpdate = ({ prop, value }) => {[m
+[36m@@ -44,9 +45,12 @@[m [mexport const employeeFetch = () => {[m
+ export const employeeSave = ({ name, phone, shift, uid }) => {[m
+     const { currentUser } = firebase.auth();[m
+ [m
+[31m-    return () => {[m
+[32m+[m[32m    return (dispatch) => {[m
+         firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)[m
+             .set({ name, phone, shift })[m
+[31m-            .then(() => console.log('saved!!!'));[m
+[32m+[m[32m            .then(() => {[m
+[32m+[m[32m                dispatch({ type: EMPLOYEE_SAVE_SUCCESS });[m
+[32m+[m[32m                Actions.employeeList({ type: 'reset' })[m
+[32m+[m[32m            });[m
+     }[m
+ };[m
+\ No newline at end of file[m
+[1mdiff --git a/src/actions/types.js b/src/actions/types.js[m
+[1mindex 5b379b9..2545d89 100644[m
+[1m--- a/src/actions/types.js[m
+[1m+++ b/src/actions/types.js[m
+[36m@@ -3,6 +3,8 @@[m [mexport const PASSWORD_CHANGED = 'password_changed';[m
+ export const LOGIN_USER_SUCCESS = 'login_user_success';[m
+ export const LOGIN_USER_FAIL = 'login_user_fail';[m
+ export const LOGIN_USER = 'login_user';[m
+[32m+[m
+ export const EMPLOYEE_UPDATE = 'employee_update';[m
+ export const EMPLOYEE_CREATE = 'employee_create';[m
+[31m-export const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';[m
+\ No newline at end of file[m
+[32m+[m[32mexport const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';[m
+[32m+[m[32mexport const EMPLOYEE_SAVE_SUCCESS = 'employee_save_success';[m
+\ No newline at end of file[m
+[1mdiff --git a/src/components/EmployeeEdit.js b/src/components/EmployeeEdit.js[m
+[1mindex eaec152..63f0b7b 100644[m
+[1m--- a/src/components/EmployeeEdit.js[m
+[1m+++ b/src/components/EmployeeEdit.js[m
+[36m@@ -1,6 +1,7 @@[m
+ import _ from 'lodash';[m
+ import React, { Component } from 'react';[m
+ import { connect } from 'react-redux';[m
+[32m+[m[32mimport Communications from 'react-native-communications';[m
+ import EmployeeForm from './EmployeeForm';[m
+ import { employeeUpdate, employeeSave } from '../actions';[m
+ import { Card, CardSection, Button } from './common';[m
+[36m@@ -20,15 +21,28 @@[m [mclass EmployeeEdit extends Component {[m
+         this.props.employeeSave({ name, phone, shift, uid: this.props.employee.uid });[m
+     }[m
+ [m
+[32m+[m[32m    onTextPress() {[m
+[32m+[m[32m        const { phone, shift } = this.props;[m
+[32m+[m
+[32m+[m[32m        Communications.text(phone, `Your upcoming shift is on ${shift}`);[m
+[32m+[m[32m    }[m
+[32m+[m
+     render() {[m
+         return ([m
+             <Card>[m
+[31m-                <EmployeeForm {...this.props}/>[m
+[32m+[m[32m                <EmployeeForm/>[m
+[32m+[m
+                 <CardSection>[m
+                     <Button onPress={this.onButtonPress.bind(this)}>[m
+                         Save Changes[m
+                     </Button>[m
+                 </CardSection>[m
+[32m+[m
+[32m+[m[32m                <CardSection>[m
+[32m+[m[32m                    <Button onPress={this.onTextPress.bind(this)}>[m
+[32m+[m[32m                        Text Schedule[m
+[32m+[m[32m                    </Button>[m
+[32m+[m[32m                </CardSection>[m
+             </Card>[m
+         );[m
+     }[m
+[1mdiff --git a/src/reducers/EmployeeFormReducer.js b/src/reducers/EmployeeFormReducer.js[m
+[1mindex d0db258..dab20c9 100644[m
+[1m--- a/src/reducers/EmployeeFormReducer.js[m
+[1m+++ b/src/reducers/EmployeeFormReducer.js[m
+[36m@@ -1,6 +1,7 @@[m
+ import {[m
+     EMPLOYEE_UPDATE,[m
+[31m-    EMPLOYEE_CREATE[m
+[32m+[m[32m    EMPLOYEE_CREATE,[m
+[32m+[m[32m    EMPLOYEE_SAVE_SUCCESS[m
+ } from '../actions/types';[m
+ [m
+ const INITIAL_STATE = {[m
+[36m@@ -19,7 +20,8 @@[m [mexport default (state = INITIAL_STATE, action) => {[m
+             // newState[action.payload.prop] = action.payload.value; interpellation[m
+             return {...state, [action.payload.prop]: action.payload.value};[m
+ [m
+[31m-        case EMPLOYEE_CREATE:[m
+[32m+[m[32m        case EMPLOYEE_CREATE,[m
+[32m+[m[32m             EMPLOYEE_SAVE_SUCCESS:[m
+             return INITIAL_STATE;[m
+ [m
+         default:[m
