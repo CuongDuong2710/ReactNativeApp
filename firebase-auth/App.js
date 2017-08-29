@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import SignUpForm from './components/SignUpForm'
 
 export default class App extends React.Component {
-  // render Sign Up Form
   render() {
     return (
       <View style={styles.container}>
