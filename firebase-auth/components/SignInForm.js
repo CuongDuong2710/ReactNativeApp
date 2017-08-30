@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { FormLabel, FormInput, Button } from 'react-native-elements'
 import axios from 'axios'
+import firebase from firebase
 
 const ROOT_URL = 'https://us-central1-one-time-password-d0881.cloudfunctions.net'
 
@@ -11,9 +12,15 @@ class SignInForm extends Component {
 
   handleSubmit = async () => {
     try {
-      await axios.post(`${ROOT_URL}/verifyOneTimePassword`, {
+      // 'data' is going to contain a key called token.
+      // Token is what we really care about to get our user logged in using firebase
+      let { data } = await axios.post(`${ROOT_URL}/verifyOneTimePassword`, {
         phone: this.state.phone, code: this.state.code 
       })
+
+      // User can use firebase anywhere inside our application. 
+      // So thay can make request, get data anything they really want to do
+      firebase.auth().signInWithCustomToken(data.token)
     } catch (err) {
         console.log(err)
     }
