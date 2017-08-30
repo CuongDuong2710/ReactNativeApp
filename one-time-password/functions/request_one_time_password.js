@@ -12,7 +12,7 @@ module.exports = function(req, res) {
     admin.auth().getUser(phone)
       .then(userRecord => {
 
-        // Generate code
+        // Generate code between 1000-9999
         const code = Math.floor((Math.random() * 8999 + 1000))
 
         // Sending texts to user, asynchonorous action use callback 'err' object
