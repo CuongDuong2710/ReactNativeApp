@@ -5,6 +5,10 @@
   "author": null,
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "node lib/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "expo": "^20.0.0",
     "react": "16.0.0-alpha.12",
