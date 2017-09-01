@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
-class DeckScreen extends Component {
+class Slides extends Component {
   render() {
     return (
       <View>
-        <Text>DeckScreen</Text>
       </View>
     )
   }
 }
 
-export default DeckScreen
+export default Slides
