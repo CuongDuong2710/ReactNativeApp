@@ -11,6 +11,8 @@ import ReviewScreen from './screens/ReviewScreen'
 
 export default class App extends React.Component {
   render() {
+    // The 'welcome' screen is being rendered directly by react-navigation through the 'TabNavigator'.
+    // React-navigation going to pass down that 'props' of navigation to 'welcome' screen.
     const MainNavigator = TabNavigator({
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },

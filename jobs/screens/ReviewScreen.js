@@ -5,6 +5,9 @@ import { Button } from 'react-native-elements'
 class ReviewScreen extends Component {
     // The block of code will automatically moved into the constructor of the component - instance property
     //state = { color: 'red' }
+
+    // This is all a class level properties do not have access to 'props' 
+    // because 'props' only exist on instances of components
     static navigationOptions = ({ navigation }) => ({
         title: 'Review Jobs',
         headerRight: (

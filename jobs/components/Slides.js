@@ -6,15 +6,22 @@ import { Button } from 'react-native-elements'
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Slides extends Component {
-  // render button on last slide
   // 'raised': default styling give button a slightly better look
+  // We're going to pass down a prop from the Welcome screen, this callback should be called whenever user presses.
+  // 'this.props.onComplete'  not any parentheses. This is supposed to be a function right here. We only want to call this
+  // at some point in the future.
+  // If we add () that means the callback will be called the instant that the button is rendered which is of course not what we want.
   renderLastSlide(index) {
     if (index === this.props.data.length - 1) {
         return (
-          <Button
-            title="Onwards!"
-            raised
-          />
+          <View style={{ marginTop: 15 }}>
+            <Button
+                title="Onwards!"
+                raised
+                buttonStyle={styles.buttonStyle}
+                onPress={this.props.onComplete}
+            />
+          </View>
         )
     }
   }
@@ -61,6 +68,12 @@ const styles = {
     fontSize: 30,
     color: 'white',
     textAlign: 'center'
+  },
+  buttonStyle: {
+      backgroundColor: '#0288D1',
+    //   marginTop: 15 - have a little white space above button.
+    // Looks like the style only applies within the component. 
+    // To add the marginTop outside of the Button, I wrapped it in a view and applied the style to that view
   }
 }
 
