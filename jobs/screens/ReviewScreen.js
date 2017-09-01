@@ -15,7 +15,8 @@ class ReviewScreen extends Component {
               color="rgba(0, 122, 255, 1)"
             />
         ),
-        style: {
+        headerStyle: {
+            // If the app running on Android set margin Top is 24
             marginTop: Platform.OS === 'android' ? 24 : 0
         }
     })

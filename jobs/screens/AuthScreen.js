@@ -13,7 +13,7 @@ class AuthScreen extends Component {
 
 const styles = {
     containerStyles: {
-        marginTop: 10
+        marginTop: 24
     }
 }
 
