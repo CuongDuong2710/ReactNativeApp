@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
+import { Provider } from 'react-redux'
 
+import store from './store'
 import AuthScreen from './screens/AuthScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
 import MapScreen from './screens/MapScreen'
@@ -9,6 +11,7 @@ import DeckScreen from './screens/DeckScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import ReviewScreen from './screens/ReviewScreen'
 
+// We make use of the 'react-redux' library to get a binding between the redux side of our application and the react side of our application.
 export default class App extends React.Component {
   render() {
     // The 'welcome' screen is being rendered directly by react-navigation through the 'TabNavigator'.
@@ -40,8 +43,13 @@ export default class App extends React.Component {
       animationEnabled: false
     })
 
+    // The 'provider' tag here is a react component that accepts our redux store as a prop
+    // then the provider make access to the store available to all of its children properties or seemy all of its children component.
+    // So we need to make sure that we also use 'redux' to create a store thats going to hold all of the state for our application.
     return (
+      <Provider store={store}>
         <MainNavigator />
+      </Provider>
     );
   }
 }
