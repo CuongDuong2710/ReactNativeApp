@@ -9,7 +9,7 @@ class Slides extends Component {
   // 'raised': default styling give button a slightly better look
   // We're going to pass down a prop from the Welcome screen, this callback should be called whenever user presses.
   // 'this.props.onComplete'  not any parentheses. This is supposed to be a function right here. We only want to call this
-  // at some point in the future.
+  // at some point in the future (call callback funtion in 'welcome' screen)
   // If we add () that means the callback will be called the instant that the button is rendered which is of course not what we want.
   renderLastSlide(index) {
     if (index === this.props.data.length - 1) {
