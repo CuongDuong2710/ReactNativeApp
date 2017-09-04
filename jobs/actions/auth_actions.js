@@ -30,6 +30,8 @@ const doFacebookLogin= async (dispatch) => {
   })
 
   // 'type' is check login facebook success or fail
+  // If the user fails to log in, call the action creator 'FACEBOOK_LOGIN_FAIL' again
+  // and just force the user to attempt to sign into our application
   if (type == 'cancel') {
       return dispatch({ type: FACEBOOK_LOGIN_FAIL })
   }
