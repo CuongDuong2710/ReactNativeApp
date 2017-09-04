@@ -16,6 +16,8 @@ export default class App extends React.Component {
   render() {
     // The 'welcome' screen is being rendered directly by react-navigation through the 'TabNavigator'.
     // React-navigation going to pass down that 'props' of navigation to 'welcome' screen.
+    // By defaut, react-navigation is going to attempt to automatically render both 'welcome' and 'auth' screen.
+    // So delay react-navigation from attempting to eagerly load 'auth' screen
     const MainNavigator = TabNavigator({
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
@@ -32,14 +34,17 @@ export default class App extends React.Component {
         },
         {
           tabBarPosition: 'bottom',
-          lazyLoad: true
+          lazy: true
         })
       },
     },
     {
+      navigationOptions: {
+        tabBarVisible: false
+      },
       tabBarPosition: 'bottom',
       swipeEnabled: false,
-      lazyLoad: true,
+      lazy: true,
       animationEnabled: false
     })
 
