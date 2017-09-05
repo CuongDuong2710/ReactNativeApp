@@ -20,8 +20,8 @@ class AuthScreen extends Component {
     }
 
     onAuthComplete(props) {
-      debugger;
       if (props.token) {
+        console.log(props.token)
         this.props.navigation.navigate('map')
       }
     }
