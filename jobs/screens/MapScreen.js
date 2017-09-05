@@ -6,6 +6,7 @@ class MapScreen extends Component {
   state = {
     mapLoaded: false,
     // initial region
+    // We're going to pass the entire region object over to the action creator
     region: {
       longitude: -122,
       latitude: 37,
