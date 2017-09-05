@@ -7,15 +7,20 @@ class MapScreen extends Component {
     mapLoaded: false,
     // initial region
     region: {
-    longitude: -122,
-    latitude: 37,
-    longitudeDelta: 0.04,
-    latitudeDelta: 0.09
+      longitude: -122,
+      latitude: 37,
+      longitudeDelta: 0.04,
+      latitudeDelta: 0.09
+    }
   }
-}
 
   componentDidMount() {
-      this.setState({ mapLoaded: true })
+    this.setState({ mapLoaded: true })
+  }
+
+  onRegionChangeComplete = (region) => {
+    console.log(region)
+    this.setState({ region })
   }
 
   render() {
@@ -28,8 +33,10 @@ class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MapView 
-        region={this.state.region}
-        style={{ flex: 1 }}/>
+          region={this.state.region}
+          style={{ flex: 1 }}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+        />
       </View>
     )
   }
