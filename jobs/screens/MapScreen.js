@@ -30,7 +30,10 @@ class MapScreen extends Component {
 
   // Pass entire 'region' to 'fetchJobs' action creator
   onButtonPress = () => {
-    this.props.fetchJobs(this.state.region)
+    // we pass a callback function to 'fetchJobs' to navigate deck screen
+    this.props.fetchJobs(this.state.region, () => {
+      this.props.navigation.navigate('deck')
+    })
   }
 
   render() {

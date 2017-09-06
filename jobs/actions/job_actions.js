@@ -26,20 +26,17 @@ const buildJobsUrl = (zip) => {
 }
 
 // From 'MapScreen': we're going to pass the entire 'region' object over to the action creator
-export const fetchJobs = (region) => async (dispatch) => {
+export const fetchJobs = (region, callback) => async (dispatch) => {
   try {
     // convert latlong to zip
     let zip = reverseGeocode(region)
-
     const url = buildJobsUrl(zip)
-
     // Make the actual network request over to Indeed, fetch that list of jobs and return as a response object
     let { data } = await axios.get(url)
-
     // dispatch action
     dispatch({ type: FETCH_JOBS, payload: data })
-    console.log("data: " + data)
-
+    // navigate to deck screen
+    callback()
   } catch(e) {
       console.error(e)
   }
