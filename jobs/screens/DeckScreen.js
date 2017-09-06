@@ -7,7 +7,6 @@ import Swipe from '../components/Swipe'
 
 class DeckScreen extends Component {
   // receving a single job & return some amount of jsx will show a render card
-  // 'job.snipped' is replace open tag <b> and close tag </b> to empty string ''
   renderCard(job) {
 
     const initialRegion = {
@@ -21,6 +20,7 @@ class DeckScreen extends Component {
     // 'cacheEnabled': we control whether or not the mapview is going to render itself as a plain image 
     // or it's going to render itself like very live and real component
     // 'true': the map will render as a very static image and that is not going to be consuming a tremendous amount of resources (50-100 megabytes)
+    // 'job.snipped' is replace open tag <b> and close tag </b> to empty string ''
     return (
       <Card title={job.jobtitle}>
         <View style={{ height: 300 }}>
@@ -54,7 +54,7 @@ class DeckScreen extends Component {
     // 'this.renderCard' we're not placing any parenthese on here because we don't want to call it right now.
     // It's up to the Swipe component for deciding when and how to call the function.
     return (
-      <View>
+      <View style={{ marginTop: 10 }}>
         <Swipe 
           data={this.props.jobs}
           renderCard={this.renderCard}

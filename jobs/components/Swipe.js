@@ -91,7 +91,7 @@ class Swipe extends Component {
 
   // zIndex is controlling the ordering of all cards
   // 'item.jobkey' is a very hard coded key, in the future we're going to run into the exact same issue "Each child in an array should have a unique key prop"
-  // Specify a prop will pass into Swipe and tell us that what property it should look at on each individual item to use a key
+  // Specify a prop will pass into Swipe and tell us that what property it should look at on each individual item to use a key (id or jobkey)
   renderCards() {
     if (this.state.index >= this.props.data.length) {
       return this.props.renderNoMoreCards();
