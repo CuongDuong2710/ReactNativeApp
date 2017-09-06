@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { MapView } from 'expo'
 import { Card, Button } from 'react-native-elements'
@@ -9,8 +9,29 @@ class DeckScreen extends Component {
   // receving a single job & return some amount of jsx will show a render card
   // 'job.snipped' is replace open tag <b> and close tag </b> to empty string ''
   renderCard(job) {
+
+    const initialRegion = {
+      longitude: job.longitude,
+      latitude: job.latitude,
+      longitudeDelta: 0.045,
+      latitudeDelta: 0.02
+    }
+
+    // MapView 'scrollEnable=false', user cannot scroll when view job
+    // 'cacheEnabled': we control whether or not the mapview is going to render itself as a plain image 
+    // or it's going to render itself like very live and real component
+    // 'true': the map will render as a very static image and that is not going to be consuming a tremendous amount of resources (50-100 megabytes)
     return (
       <Card title={job.jobtitle}>
+        <View style={{ height: 300 }}>
+          <MapView
+            scrollEnabled={false}
+            style={{ flex: 1 }}
+            cacheEnabled={Platform.OS === 'android' ? true : false }
+            initialRegion={initialRegion}
+          >
+          </MapView>
+        </View>
         <View style={styles.detailWrapper}>
           <Text>{job.company}</Text>
           <Text>{job.formattedRelativeTime}</Text>
@@ -21,6 +42,14 @@ class DeckScreen extends Component {
       </Card>
     )
   }
+
+  renderNoMoreCards() {
+    return (
+      <Card title="No more jobs">
+      </Card>
+    )
+  }
+
   render() {
     // 'this.renderCard' we're not placing any parenthese on here because we don't want to call it right now.
     // It's up to the Swipe component for deciding when and how to call the function.
@@ -29,6 +58,7 @@ class DeckScreen extends Component {
         <Swipe 
           data={this.props.jobs}
           renderCard={this.renderCard}
+          renderNoMoreCards={this.renderNoMoreCards}
         />
       </View>
     )
