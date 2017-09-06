@@ -30,19 +30,16 @@ export const fetchJobs = (region) => async (dispatch) => {
   try {
     // convert latlong to zip
     let zip = reverseGeocode(region)
-    console.log("region: " + region)
-    console.log("zip: " + zip)
 
     const url = buildJobsUrl(zip)
-    console.log("url: " + url)
 
-    // Make the actual request over to Indeed, fetch that list of jobs and return as a response object
+    // Make the actual network request over to Indeed, fetch that list of jobs and return as a response object
     let { data } = await axios.get(url)
 
     // dispatch action
     dispatch({ type: FETCH_JOBS, payload: data })
     console.log("data: " + data)
-    
+
   } catch(e) {
       console.error(e)
   }

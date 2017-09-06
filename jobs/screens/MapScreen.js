@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { MapView } from 'expo'
+import { connect } from 'react-redux'
+import { Button } from 'react-native-elements'
+
+import * as actions from '../actions'
 
 class MapScreen extends Component {
   state = {
@@ -24,6 +28,11 @@ class MapScreen extends Component {
     this.setState({ region })
   }
 
+  // Pass entire 'region' to 'fetchJobs' action creator
+  onButtonPress = () => {
+    this.props.fetchJobs(this.state.region)
+  }
+
   render() {
     // show indicator when loading map view
     if (!this.state.mapLoaded) {
@@ -38,9 +47,28 @@ class MapScreen extends Component {
           style={{ flex: 1 }}
           onRegionChangeComplete={this.onRegionChangeComplete}
         />
+        <View style={styles.buttonContainer}>
+          <Button
+            large
+            title="Search This Area"
+            backgroundColor="#009688"
+            icon={{ name: 'search' }}
+            onPress={this.onButtonPress}
+          />
+        </View>
       </View>
     )
   }
 }
 
-export default MapScreen
+const styles = {
+  buttonContainer: {
+    position: 'absolute', // every inside of it does not try to take up space away from the map view
+    bottom: 20, // margin bottom 20 units from the bottom tab bar
+    left: 0, // stretch all the way from left to right
+    right: 0
+  }
+}
+
+// don't need action clear in here { fetchJobs }
+export default connect(null, actions)(MapScreen)
