@@ -15,7 +15,8 @@ const SWIPE_OUT_DURATION = 250;
 class Swipe extends Component {
   static defaultProps = {
     onSwipeRight: () => {},
-    onSwipeLeft: () => {}
+    onSwipeLeft: () => {},
+    keyProp: 'id'
   }
 
   constructor(props) {
@@ -88,6 +89,9 @@ class Swipe extends Component {
     };
   }
 
+  // zIndex is controlling the ordering of all cards
+  // 'item.jobkey' is a very hard coded key, in the future we're going to run into the exact same issue "Each child in an array should have a unique key prop"
+  // Specify a prop will pass into Swipe and tell us that what property it should look at on each individual item to use a key
   renderCards() {
     if (this.state.index >= this.props.data.length) {
       return this.props.renderNoMoreCards();
@@ -99,7 +103,7 @@ class Swipe extends Component {
       if (i === this.state.index) {
         return (
           <Animated.View
-            key={item.id}
+            key={item[this.props.keyProp]} // item["jobkey"]
             style={[this.getCardStyle(), styles.cardStyle, { zIndex: 99 }]}
             {...this.state.panResponder.panHandlers}
           >
@@ -110,7 +114,7 @@ class Swipe extends Component {
 
       return (
         <Animated.View
-          key={item.id}
+          key={item[this.props.keyProp]}
           style={[styles.cardStyle, { top: 10 * (i - this.state.index), zIndex: 5 }]}
         >
           {this.props.renderCard(item)}
