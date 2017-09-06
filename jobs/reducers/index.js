@@ -4,5 +4,6 @@ import jobs from './jobs_reducer'
 
 export default combineReducers({
     // auth: auth
+    // the list of jobs exits on the the 'jobs' piece of state and pass in 'DeckScreen' mapStateToProps()
     auth, jobs
 })
