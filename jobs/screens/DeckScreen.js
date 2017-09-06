@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { MapView } from 'expo'
 import { Card, Button } from 'react-native-elements'
 import Swipe from '../components/Swipe'
+import * as actions from '../actions'
 
 class DeckScreen extends Component {
   // receving a single job & return some amount of jsx will show a render card
@@ -59,6 +60,7 @@ class DeckScreen extends Component {
           data={this.props.jobs}
           renderCard={this.renderCard}
           renderNoMoreCards={this.renderNoMoreCards}
+          onSwipeRight={job => this.props.likeJob(job)}
           keyProp="jobkey"
         />
       </View>
@@ -74,6 +76,7 @@ const styles = {
   }
 }
 
+// Make sure this component is wired up to redux state
 // 'jobs' piece of state from combineReducers (right :)
 // can pass 'state' argument =>  mapStateToProps( state )
 // jobs (left :) inside a component will refer to the array of jobs that we're working with
@@ -81,4 +84,5 @@ function mapStateToProps({ jobs }) {
   return { jobs: jobs.results }
 }
 
-export default connect(mapStateToProps)(DeckScreen)
+// which means we need to import all our action creators
+export default connect(mapStateToProps, actions)(DeckScreen)
