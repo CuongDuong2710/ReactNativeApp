@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Platform } from 'react-native'
 import { Button } from 'react-native-elements'
+import { connect } from 'react-redux'
 
 class ReviewScreen extends Component {
     // The block of code will automatically moved into the constructor of the component - instance property
@@ -33,4 +34,9 @@ class ReviewScreen extends Component {
     }
 }
 
-export default ReviewScreen
+// now we can consider the list of like jobs to exist as a prop 'likedJobs' inside our component
+function mapStateToProps(state) {
+    return { likedJobs: state.likedJobs }
+}
+
+export default connect(mapStateToProps)(ReviewScreen)
