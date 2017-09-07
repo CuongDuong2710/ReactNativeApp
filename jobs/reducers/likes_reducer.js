@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import {
-    LIKE_JOB
+    LIKE_JOB,
+    CLEAR_LIKED_JOBS
 } from '../actions/types'
 
 export default function(state = [], action) {
@@ -13,6 +14,10 @@ export default function(state = [], action) {
       return _.uniqBy([
         action.payload, ...state
       ],'jobkey')
+    
+    case CLEAR_LIKED_JOBS:
+      return []
+    
     // Default case which the reducer doesn't care about the action that is getting
     default:
       return state

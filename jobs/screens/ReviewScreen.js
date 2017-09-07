@@ -84,7 +84,7 @@ const styles = {
   }
 }
 
-// now we can consider the list of like jobs to exist as a prop 'likedJobs' inside our component
+// now we can consider the list of like jobs to exist as a prop 'likedJobs' inside our component from '../reducer/index'
 function mapStateToProps(state) {
   return { likedJobs: state.likedJobs }
 }
