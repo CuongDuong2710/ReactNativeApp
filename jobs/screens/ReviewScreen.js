@@ -11,24 +11,27 @@ class ReviewScreen extends Component {
     // This is all a class level properties do not have access to 'props' 
     // because 'props' only exist on instances of components
     static navigationOptions = ({ navigation }) => ({
-        title: 'Review Jobs',
-        headerRight: (
-            <Button 
-              title="Settings" 
-              onPress={() => { navigation.navigate('settings') }}
-              backgroundColor="rgba(0,0,0,0)"
-              color="rgba(0, 122, 255, 1)"
-            />
-        ),
-        headerStyle: {
-            // If the app running on Android set margin Top is 24
-            marginTop: Platform.OS === 'android' ? 24 : 0
-        }
+      title: 'Review Jobs',
+      headerRight: (
+        <Button 
+          title="Settings" 
+          onPress={() => { navigation.navigate('settings') }}
+          backgroundColor="rgba(0,0,0,0)"
+          color="rgba(0, 122, 255, 1)"
+        />
+      ),
+      headerStyle: {
+        // If the app running on Android set margin Top is 24
+        marginTop: Platform.OS === 'android' ? 24 : 0
+      }
     })
 
     renderLikedJobs() {
       return this.props.likedJobs.map(job => {
-        const { company, formattedRelativeTime, url, longitude, latitude } = job
+        const {
+          company, formattedRelativeTime, url,
+          longitude, latitude, jobtitle, jobkey
+        } = job
         const initialRegion = {
           longitude,
           latitude,
@@ -37,7 +40,7 @@ class ReviewScreen extends Component {
         }
 
         return (
-          <Card>
+          <Card title={jobtitle} key={jobkey}>
             <View style={{ height: 200 }}>
               <MapView
                 style={{ flex: 1 }}
@@ -61,11 +64,11 @@ class ReviewScreen extends Component {
     }
 
     render() {
-        return (
-            <ScrollView>
-              {this.renderLikedJobs()}
-            </ScrollView>
-        )
+      return (
+        <ScrollView>
+          {this.renderLikedJobs()}
+        </ScrollView>
+      )
     }
 }
 
@@ -74,6 +77,7 @@ const styles = {
     fontStyle: 'italic'
   },
   detailWrapper: {
+    marginTop: 10,
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-around'
@@ -82,7 +86,7 @@ const styles = {
 
 // now we can consider the list of like jobs to exist as a prop 'likedJobs' inside our component
 function mapStateToProps(state) {
-    return { likedJobs: state.likedJobs }
+  return { likedJobs: state.likedJobs }
 }
 
 export default connect(mapStateToProps)(ReviewScreen)
