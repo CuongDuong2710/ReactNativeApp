@@ -44,7 +44,12 @@ class DeckScreen extends Component {
     )
   }
 
-  renderNoMoreCards() {
+  // ** ERROR 'Undefined is not an object this.props.navigation'
+  // This function is being executed by the Swipe component, not by the DeckScreen like the DeckScreen itself does not call this function.
+  // The value of 'this' is equal to the Swipe component. Swipe component does not have access to 'props.navigation'
+  // We can just bind the value of renderNoMoreCards to the DeckScreen.
+  // Fix: arrow funtion OR vanila funtion .bind(this)
+  renderNoMoreCards = () => {
     return (
       <Card title="No More Jobs">
         <Button
