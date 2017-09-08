@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Platform, ScrollView, Linking } from 'react-native'
-import { Button, Card } from 'react-native-elements'
+import { Button, Card, Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { MapView } from 'expo'
 
@@ -12,6 +12,9 @@ class ReviewScreen extends Component {
     // because 'props' only exist on instances of components
     static navigationOptions = ({ navigation }) => ({
       title: 'Review Jobs',
+      tabBarIcon: ({tintColor}) => {
+        return <Icon name="favorite" color={tintColor} />
+      },
       headerRight: (
         <Button
           title="Settings" 
