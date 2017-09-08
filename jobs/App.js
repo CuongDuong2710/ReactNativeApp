@@ -34,9 +34,16 @@ export default class App extends React.Component {
         },
         {
           tabBarPosition: 'bottom',
-          lazy: true,
+          lazy: true, //Each screen will not mount/load until user click on them
           swipeEnabled: false,
-          animationEnabled: false
+          animationEnabled: false,
+          tabBarOptions: { // show icon tabbar in Android
+            showIcon: true,
+            iconStyle: {
+              width: 30,
+              height: 30
+            }
+          }
         })
       },
     },
