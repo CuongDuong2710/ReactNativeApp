@@ -5,6 +5,13 @@ import { connect } from 'react-redux'
 import { clearLikedJobs } from '../actions' 
 
 class SettingScreen extends Component {
+  static navigationOptions = {
+    headerTitle: 'Settings',
+    headerStyle: {
+      marginTop: Platform.OS === 'android' ? 24 : 0
+    }
+  }
+  
   render() {
     // onPress={() => this.props.clearLikedJobs()}: didn't need to do so maybe we'll just drop off the arrow function
     // onPress={this.props.clearLikedJobs.bind(this)}: we don't care about this action creator being called in the correct context

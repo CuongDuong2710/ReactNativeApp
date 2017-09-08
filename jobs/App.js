@@ -38,6 +38,7 @@ export default class App extends React.Component {
           swipeEnabled: false,
           animationEnabled: false,
           labalStyle: { fontSize: 12 },
+          // backBehavior: 'none',
           tabBarOptions: { // show icon tabbar in Android
             showIcon: true,
             iconStyle: {
