@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator, Alert } from 'react-navigation'
 import { Provider } from 'react-redux'
+import { Notifications } from 'expo'
 
+import registerForNotifications from './services/push_notifications'
 import store from './store'
 import AuthScreen from './screens/AuthScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
@@ -13,6 +15,28 @@ import ReviewScreen from './screens/ReviewScreen'
 
 // We make use of the 'react-redux' library to get a binding between the redux side of our application and the react side of our application.
 export default class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications()
+
+    // Callback will be executed anytime the user receives a push notification
+    // It will be called with single argument refer as 'notification'. 
+    // This object will contain all the information we need to know about incoming notification and customized for the user
+    Notifications.addListener((notification) => {
+      // nested 'data' property to get access 'text' property
+      // 'origin' is going to help us make sure that we are actually receiving the 'notification' properly
+      const { data: { text }, origin } = notification
+      // const text = notification.data.text
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          text, // text is coming from a variable inside 'notification' itself
+          [{ text: 'Ok.' }] // button to dismiss popup
+        )
+      }
+    })
+  }
+
   render() {
     // The 'welcome' screen is being rendered directly by react-navigation through the 'TabNavigator'.
     // React-navigation going to pass down that 'props' of navigation to 'welcome' screen.

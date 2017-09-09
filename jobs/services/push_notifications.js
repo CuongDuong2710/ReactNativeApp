@@ -1,4 +1,5 @@
 import { Permissions, Notifications } from 'expo'
+import { AsyncStorage } from 'react-native'
 import axios from 'axios'
 
 // URL that we push token
