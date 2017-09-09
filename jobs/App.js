@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator, StackNavigator, Alert } from 'react-navigation'
+import { StyleSheet, Text, View, Alert } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { Notifications } from 'expo'
 
@@ -28,6 +28,7 @@ export default class App extends React.Component {
       // const text = notification.data.text
 
       if (origin === 'received' && text) {
+        console.log(origin)
         Alert.alert(
           'New Push Notification',
           text, // text is coming from a variable inside 'notification' itself

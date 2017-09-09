@@ -8,6 +8,7 @@ const PUSH_ENDPOINT = 'http://rallycoding.herokuapp.com/api/tokens'
 export default async () => {
   // get previous token to check whether user registerd
   let previousToken = await AsyncStorage.getItem('pushtoken')
+  console.log(previousToken)
 
   // if user have registered skip
   if (previousToken) {
