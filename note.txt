@@ -1,0 +1,9 @@
+componentDidMount()
+componentWillMount()
+
+Redux
+
+Provider
+Reducer
+connect
+mapStateToProps

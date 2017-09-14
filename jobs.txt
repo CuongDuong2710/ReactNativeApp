@@ -1,0 +1,345 @@
+Lecture 97 - Redux Setup
+
+// 'react-redux' to bind react and redux layers with each other
+// and some ability to handle asynchronous action creators with 'redux-thunk'
+
+npm install --save redux react-redux redux-thunk
+
+
+Lecture 82. Screen Boilerplate
+
+// Install react-navigation
+npm install -save react-navigation
+
+===========================
+Lecture 82. Implementing the First Navigator
+
+
+react-native start
+
+// 'tabBarPosition' to bottom for Android
+const MainNavigator = TabNavigator({
+      welcome: { screen: WelcomeScreen },
+      auth: { screen: AuthScreen }
+    }, {
+      tabBarPosition: 'bottom'
+    })
+	
+===========================
+Lecture 85. Implementing the First Navigator
+
+IOS: not swipe
+Android: swipe
+
+Two nested tab navigators give me a blank scene
+https://github.com/react-community/react-navigation/issues/662
+
+// adding properties (Lecture 84)
+
+//swipeEnabled: false,
+//      lazyLoad: true,
+//      animationEnabled: false
+
+
+      welcome: { screen: WelcomeScreen },
+      auth: { screen: AuthScreen },
+      main: {
+        screen: TabNavigator({
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
+          review: {
+            screen: StackNavigator({
+              review: { screen: ReviewScreen },
+              settings: { screen: SettingsScreen }
+            })
+          }
+        },
+        {
+          tabBarPosition: 'bottom',
+          lazyLoad: true
+        })
+      },
+    },
+    {
+      tabBarPosition: 'bottom',
+      swipeEnabled: false,
+      lazyLoad: true,
+      animationEnabled: false
+    })
+	
+===========================
+Lecture 89. Implementing the First Navigator
+	    headerStyle: {
+        //If the app is running on Android assign 24 to marginTop, if not, assign 0 to marginTop
+        marginTop: Platform.OS === 'android' ? 24 : 0
+    }
+	
+	
+//'justifyContent' is row. 'alignItems' is column
+
+===========================
+Lecture 94 - More on Welcome screen
+
+***IMPORTANT - Callback functions
+1. bind(this) for normal vanilla funtion
+
+  // Define 'onComplete' callback and pass it down into slides.
+  // We might have many different callbacks inside of here.
+  onSlidesComplete() {
+
+  }
+  
+  <Slides data={SLIDE_DATA} onComplete={this.onSlidesComplete.bind(this)} />
+  
+2. Arrow function do not need to bind(this)
+
+  onSlidesComplete = () => {
+      
+  }
+  
+  <Slides data={SLIDE_DATA} onComplete={this.onSlidesComplete} />
+  
+  
+***	QUESTION: 
+How would you rerender on screen orientation change?
+David · Lecture 94 · 4 months ago
+
+SCREEN_WIDTH works great but as soon as they change orientation everything gets out of wack. Is it normal practice to update SCREEN_WIDTH on orientation change?
+
+*** IMPORTANT - Check out https://github.com/yamill/react-native-orientation.  You can use this library to detect the screens orientation, then update the 'SCREEN_WIDTH' value when the orientation changes (as you suggested).
+
+
+===========================
+*** IMPORTANT Lecture 97 - Redux setup
+
+// We're going to create the 'provider' tag from react-redux library and then we're going to render that 'provider' passing it to store as prop then any child component of the 'provider' tag will have access to the store through
+// the context system inside of react.
+// We make use of the 'react-redux' library to get a binding between the redux side of our application and the react side of our application.
+
+// The 'provider' tag here is a react component that accepts our redux store as a prop then the provider make access to the store available to all of its children properties or seemy all of its children component.
+// So in practice this 'provider' tag ends up being the absolute root component of our application.
+// The vast majority of times now I did mention that we need to have access to a store or an instance of a store whenever we create this provider.
+
+// So we need to make sure that we also use redux to create a store thats going to hold all of the state for our application.
+
+===========================
+*** IMPORTANT Lecture 99 - Crazy Async/Await syntax
+
+1. Vanilla normal function
+
+export const facebookLogin = () => {
+  return async function(dispatch) {
+    let token = await AsyncStorage.getItem('fb_token')
+    if (token) {
+        // Dispatch an action saying FB login is done
+    } else {
+        // Start up FB login process
+    }
+  }
+}
+
+2. Array function
+
+export const facebookLogin = () => {
+  return async (dispatch) => {
+    let token = await AsyncStorage.getItem('fb_token')
+    if (token) {
+        // Dispatch an action saying FB login is done
+    } else {
+        // Start up FB login process
+    }
+  }
+}
+
+3. Single javascript expression as the body, do not need 'curly braces' and 'return'
+
+export const facebookLogin = () =>
+   async (dispatch) => {
+    let token = await AsyncStorage.getItem('fb_token')
+    if (token) {
+        // Dispatch an action saying FB login is done
+    } else {
+        // Start up FB login process
+    }
+  }
+
+
+
+***IMPORTANT - Remember the rules of arrow function
+We use curly braces to define the function body and then place a 'return' statement
+OR
+we are defining a single javascript expression or a single variable and want it to be automatically returned
+
+
+*******************************
+Why use dispatch?
+Rex · Lecture 99 · 2 months ago
+
+
+I understand that the facebookLogin function is an asynchronous action, but what is the use of dispatch keyword here? Can someone explain the use of thunk? How it works differently than async keyword?
+
+ Alec — Teaching Assistant
+· 2 months ago
+
+Hi Rex,
+
+Redux Thunk allows us to return a function from an action creator.  This means that actions can be delayed or dispatched when certain conditions are met.  The dispatch keyword is part of redux, 
+and it is automatically passed to the function we return from an action creator.  This is unrelated to asyc/await.  Dispatch is used to invoke another action creator or send an action to the reducers.
+
+Async/Await is a way of making Promises appear to run synchronously (no more .then  or .catch  needed).
+
+If you're interested, here's some more info about redux-thunk. https://github.com/gaearon/redux-thunk#redux-thunk
+
+*******************************
+Lecture 105 - Skipping the Auth screen
+
+Q&A
+
+Hey, I'm a beginner in both React Native and Redux, but here is what I understood from this lesson. I'm not quite sure too, but these are my guesses and hopefully Stephen will enlighten us :
+
+In the 'componentDidMount()' lifecycle method, the call to 'facebookLogin()' is asynchronous, therefore it may take some time. Let's say the user starts the application for the first time, but he has forgotten his password. He might spend 2 minutes looking for it. Meanwhile, the next line 'this.onAuthComplete(this.props)' will be called immediately. However, since 'facebookLogin()' hasn't yet ended, 'this.props.token' won't be set and the user won't be navigated to the 'map' route.
+
+That's when 'componentWillReceiveProps(nextProps)' comes into play. Let's say that the user finally typed his password and 'facebookLogin()' has completed. The store property 'token' being updated by the auth reducer, 'mapStateToProps' will be called with the new token value and trigger a re-render of the component. 'componentWillReceiveProps' will be called with the new token value and the user will be redirected to the 'map' route.
+
+So, the order of operations might be as follows : 
+
+1. Users clicks the 'Onwards' button to navigate to the AuthScreen.
+2. componentDidMount() is called. Inside it, facebookLogin() and immediately after, onAuthComplete are called. If facebookLogin completes AFTER onAuthComplete, the token property won't be set. Else, the user will be redirected to the Map screen, and it ends here.
+3. If facebookLogin() ends after onAuthComplete, the auth reducer receives the action and sets the token in the store.
+4. mapStateToProps detects this change and updates the AuthScreen props.
+5. componentWillReceiveProps(nextProps) is then called with the new props (token is not null anymore if login has been successful).
+6. User is redirected to the Map screen.
+
+< ? > What I don't understand however, is that when 'facebookLogin()' finally ends, it should set the token prop in the auth reducer. Then, mapStateToProps will trigger a re-render. In that case, shouldn't 'componentDidMount()' be called again ? Or only when setting the state directly in it that triggers a re-render ?
+
+Hopefully I'm not too far from reality and I won't mislead any future readers if I'm mistaken.
+
+Q&A
+
+The persistence of AsyncStorage and app state
+J · Lecture 105 · 2 months ago
+
+With regards to both AsyncStorage and app state, what happens when the user:
+
+* navigates away from the app (e.g. clicks the home button or goes to another app)
+
+* closes the app
+
+* restarts the phone
+
+which one gets "flushed" and when?
+Emi
+Emi
+· 2 months ago
+
+AsyncStorage is persistent. It means that it'll be available always unless you or the user deletes it manually. 
+
+The state isn't persistent so, if you restart or close the App, the state will be restarted. If you press the "home" button, the App will still be running in the background and the state will be the same, unless the App has an "exit on suspend" flag.
+
+*******************************
+Lecture 110 - Interacting with MapView
+
+Latitude (vĩ độ) and longitude (kinh độ) are used to position it in sort of the x y direction
+Latitude Delta and Longitude Delta are used to control the zoom level of the map by passing in an initial region to the map view.
+
+We're going to set some initial value for region and then every single time that there is a change, we set state on our component with that new region and then we pass it back into the mapview.
+
+So maybe user put their finger down and drag around or they zoom in or out when they complete that gesture. A callback will be called "onRegionChangeComplete" and we can pass a call function to the prop on the MapView.
+A region object which we can use to update our component level state and pass it back down into the mapview.
+
+Indeed API
+
+4201738803816157
+
+Q&A latlong-to-zip
+https://www.udemy.com/react-native-advanced/learn/v4/questions/2451352
+
+const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?'
+
+const buildJobsUrl = (zip) => {
+  // I want to take all of the different properties out of job query programs and add them to the subject.
+  // And then I also want to add in the location
+  const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip })
+}
+*******************************
+Lecture 117 - Issuing Action creator from MapScreen
+
+https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding
+
+
+*******************************
+Lecture 119 - Navigating from Action Creators
+
+// Android: click 'Search This Area' btn not navigate to Deck screen. Adding
+
+          swipeEnabled: false,
+          animationEnabled: false
+		  
+*******************************
+*** IMPORTANT - Lecture 142 - Persisting Application State
+
+// How redux works in general
+
+1. When our application first boots up we render some set of components.
+2. Then after some amount of time a component will call an action creator. This action creator will create and dispatch (or return) an object (action).
+3. That action flows through any middleware that our application contains which is just the 'redux thunk' library.
+4. That action is going to hit our reducers.
+5. The reducers will recalculate our application state. Redux assembles (lắp ráp) all the state from all the different reducers that we have inside of our application.
+6. Then it sends that off to the react side of the app, where the state will flow into our components.
+7. All the componets we render.
+
+AsyncStorage persists across restarts of our application (lose internet connection or close the app or restart device). AsyncStorage does not get white.
+It stays there for all time until the user of course delete the application.
+
+
+Q&A
+AsyncStorage vs Firebase
+Eduard · Lecture 142 · 2 months ago
+
+Hello!
+1. What are the big advantages of the AsyncStorage comparing to using Firebase database to fetch data? In this case we could have saved the jobkeys of the liked jobs in the firebase DB for a particular user.
+
+2. Is AsyncStorage quicker?
+
+3. Does AsyncStorage require more space on the device?
+
+4. Any other drawbacks of the AsyncStorage?
+Alec Barlow
+Alec — Teaching Assistant
+· 2 months ago Answer
+
+Hi Eduard,
+
+1. What are the big advantages of the AsyncStorage comparing to using Firebase database to fetch data? In this case we could have saved the jobkeys of the liked jobs in the firebase DB for a particular user.
+
+Data on AsyncStorage is device specific, so you don't need to worry about securing user data with a layer of authorization, like you would with Firebase.  Unlike Firebase, no configuration is necessary with AsyncStorage; it acts very much like LocalStorage on a web browser.  In addition, AsyncStorage is available without an internet connection.
+
+
+2. Is AsyncStorage quicker?
+
+My guess would be yes, because AsyncStorage does not need to connect to the internet.
+
+
+3. Does AsyncStorage require more space on the device?
+
+On Android, the default storage space is 6MB.  No limit on iOS.
+
+
+4. Any other drawbacks of the AsyncStorage?
+
+It only stores key-value pairs, so you don't get the robust features of a SQL or noSQL database.  It's device specific, so it wouldn't really work well for social apps (apps that need access to the same data).
+
+
+ExponentPushToken[kJRu1BFyiEngmJZ2Puc2h0]
+
+1:57:08 PM
+Published to https://exp.host/@cuongduong2710/jobs
+1:57:09 PM
+Sent link https://exp.host/@cuongduong2710/jobs to dotran1989@gmail.com.
+
+
+
+
+
+
+

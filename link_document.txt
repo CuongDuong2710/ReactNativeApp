@@ -1,0 +1,124 @@
+https://docs.expo.io/versions/latest/index.html
+
+// Apply Middleware
+
+http://redux.js.org/docs/api/applyMiddleware.html
+
+https://github.com/gaearon/redux-thunk#redux-thunk
+
+https://github.com/CuongDuong2710/react-redux/blob/master/docs/api.md#api
+
+
+// MAPS
+https://github.com/airbnb/react-native-maps
+
+// NPM JS
+https://www.npmjs.com
+
+
+<Provider store>
+
+Makes the Redux store available to the connect() calls in the component hierarchy below. Normally, you can’t use connect() without wrapping a parent or ancestor component in <Provider>.
+
+If you really need to, you can manually pass store as a prop to every connect()ed component, but we only recommend to do this for stubbing store in unit tests, or in non-fully-React codebases. Normally, you should just use <Provider>.
+
+Props
+
+store (Redux Store): The single Redux store in your application.
+children (ReactElement) The root of your component hierarchy.
+
+========================================================
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
+Connects a React component to a Redux store. connect is a facade around connectAdvanced, providing a convenient API for the most common use cases.
+
+It does not modify the component class passed to it; instead, it returns a new, connected component class for you to use.
+
+
+Arguments
+
+[mapStateToProps(state, [ownProps]): stateProps] (Function): If this argument is specified, the new component will subscribe to Redux store updates. This means that any time the store is updated, mapStateToProps will be called. 
+The results of mapStateToProps must be a plain object, which will be merged into the component’s props. If you don't want to subscribe to store updates, pass null or undefined in place of mapStateToProps.
+
+If your mapStateToProps function is declared as taking two parameters, it will be called with the store state as the first parameter and the props passed to the connected component as the second parameter, and will also be re-invoked
+whenever the connected component receives new props as determined by shallow equality comparisons. (The second parameter is normally referred to as ownProps by convention.)
+
+=======================================================
+INSTALL
+
+// Install Node.js and Python 2.0
+
+// Install react-native-cli
+
+npm install -g react-native-cli
+
+// Install a project
+react-native init albums
+
+// 'redux-thunk': network request
+npm install --save redux react-redux redux-thunk
+
+npm install --save lodash
+
+
+Lecture 82. Screen Boilerplate
+
+// Install react-navigation
+npm install -save react-navigation
+
+
+// Install firebase
+npm install -g firebase-tools
+
+// Login to firebase
+firebase login
+
+// Deploy firebase project
+firebase deploy --project one-time-password-d0881
+
+// Install firebase in expo project
+npm install --save firebase
+
+// Button
+npm install react-native-elements --save
+
+// network request
+npm install --save axios
+
+// Convert latitude, longitute to zip code
+npm install --save latlng-to-zip
+
+// Query string
+npm install --save qs
+
+// React Native Map
+https://github.com/airbnb/react-native-maps
+
+// Async Storage
+npm install --save redux-persist
+
+=======================================================
+
+[Ho Chi Minh City][Intern/Full-Time]
+
+9cv9 is looking for a Frontend Intern developer who has strong interests, good knowledge in ReactJS, willing to learn and put in hard work to help startups grow.
+
+Requirements:
+- Must have Basic knowledge of ReactJS
+- Strong understanding of Props, States, Components and Classes
+- Comfortable coding between ES5 and ES6
+- Redux, ImmutableJS, Flux knowledge are good to have
+- Rails and Coffeescript knowledge are good to have
+- Enthusiastic and passionate
+- Fast-learner
+- Comfortable using Git, Bitbucket, Trello, and Slack
+- Basic English Speaking and Writing is a must
+
+What will you be helping and learning during this internship:
+- Building live projects and codes for deployment and production
+- Working in a team to deliver critical codes under time constraints
+- Learning and Practising new Languages, Libraries and Frameworks
+- Working with the CEO and Founders to deliver awesome UX/UI to our target users
+- Improving your English and Communication skills
+
+Send your CV to hello@9cv9.com now. Vacancy: 1.

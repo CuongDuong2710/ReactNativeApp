@@ -1,0 +1,141 @@
+import { Animated } from 'react-native';
+
+Animated.Value.Animated
+Animated.Types.Spring
+Animated.Components.View
+
+// Instal ESLint
+Z:\reactnative\swipe>npm install -g eslint
+C:\Users\QUOC CUONG\AppData\Roaming\npm\eslint -> C:\Users\QUOC CUONG\AppData\Roaming\npm\node_modules\eslint\bin\eslint.js
+
+Z:\reactnative\swipe>npm install eslint
+
+Z:\reactnative\swipe>eslint --init
+? How would you like to configure ESLint? Answer questions about your style
+? Are you using ECMAScript 6 features? Yes
+? Are you using ES6 modules? Yes
+? Where will your code run? Browser
+? Do you use CommonJS? Yes
+? Do you use JSX? Yes
+? Do you use React? Yes
+? What style of indentation do you use? Tabs
+? What quotes do you use for strings? Double
+? What line endings do you use? Windows
+? Do you require semicolons? Yes
+? What format do you want your config file to be in? JavaScript
+Local ESLint installation not found.
+Installing eslint-plugin-react@latest, eslint@latest
+swipe@0.0.0 Z:\reactnative\swipe
++-- eslint@4.5.0
+`-- eslint-plugin-react@7.2.1
+  +-- has@1.0.1
+  | `-- function-bind@1.1.0
+  `-- jsx-ast-utils@2.0.0
+    `-- array-includes@3.0.3
+      +-- define-properties@1.1.2
+      | +-- foreach@2.0.5
+      | `-- object-keys@1.0.11
+      `-- es-abstract@1.8.0
+        +-- es-to-primitive@1.1.1
+        | +-- is-date-object@1.0.1
+        | `-- is-symbol@1.0.1
+        +-- is-callable@1.1.3
+        `-- is-regex@1.0.4
+		
+
+// Install  'eslint-plugin-react'
+>npm install -g eslint-plugin-react
+
+It was a combination of:
+
+rm -rf node_modules && npm uninstall -g eslint eslint-plugin-react
+and
+
+npm install --save-dev eslint eslint-plugin-react && npm install
+Added the trailing npm install to compensate for rm'ing node_modules entirely, just in case anyone copy/pastes this without looking 😉
+
+
+==================================================================
+*** ERROR: the development server returned response error code 502
+
+react-native start
+
+or
+
+restart at expo
+
+==================================================================
+Lecture 10: How Animations Works
+
+// {this.position.getLayout() contains some information to tell the animated view how it should be changing.
+
+<Animated.View style={this.position.getLayout()}>
+        <View style={styles.ball} />
+      </Animated.View>
+	  
+==================================================================
+Lecture 16: Customizing Individual Cards
+
+// Install 'react-native-elements'
+
+npm install react-native-elements --save
+
+*** ERROR: Please try running this command again as root/Administrator.
+
+
+==================================================================
+Lecture 18: Pan Responders's Event Handlers
+
+// is executed any time a user taps on the screen, press down on the screen. The funtion will be called if we return true from this function right here.
+
+onStartShouldSetPanResponder: 
+
+// It means that we want this instance of the responder to be responsible for the user pressing on the screen.
+
+PanResponder.create({
+      onStartShouldSetPanResponder: () => {},
+      onPanResponderMove: () => {},
+      onPanResponderRelease: () => {}
+    })
+	
+
+// This function is going to be called many many many times as your user is clicking or dragging screen.
+// 'event' is an object that has some amount of information that describes what element was actually pressed down on by the user.
+// 'gesture' has a bunch of information about what the user is doing with their finger on the screen (what pixel value the user is pressing down on, how quickly the users moving their finger...)
+
+onPanResponderMove(event, gesture)
+
+// When they remove their finger from the screen
+onPanResponderRelease
+
+==================================================================
+Lecture 19: The Gesture Object
+
+// 'panHandlers' is an object has a bunch of different callbacks that help intercept (ngăn lại) presses from a user by using the dot dot dot syntax right here.
+
+<View {...this.state.panResponder.panHandlers}>
+        {this.renderCard()}
+</View>
+
+// We care about how much the user's finger has moved inside of this individual gesture.
+
+
+// The left by 500 then the interpellation would output negative 120 degrees
+    const { position } = this.state
+    const rotate = position.x.interpolate({
+      inputRange: [-500, 0, 500],
+      outputRange: ['-120deg', '0deg', '120deg']
+    })
+
+==================================================================
+Lecture 27: Detecting Minimum Swipe Distance
+// So we need some ability to detect when the user has dragged far enough that we consider the card to the right.
+// Some type of callback or some ability to recognize that the user has liked the card.
+// Set out some minimum threshold some amount to say if you drag the card just a little bit and let go.
+	  
+==================================================================
+Lecture 36: Getting Cards to Stack
+
+// They're stacked up on top of each other 
+	  
+	  
