@@ -16,7 +16,6 @@ class Header extends Component {
 
 const style = {
   viewStyle: {
-    backgroundColor: '#6699ff',
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,

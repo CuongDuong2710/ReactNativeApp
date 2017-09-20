@@ -1,6 +1,9 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import React, { Component, Dimensions } from 'react'
+import { View, Text, ScrollView } from 'react-native'
 import axios from 'axios'
+import AlbumDetail from './AlbumDetail'
+
+// var width = Dimensions.get('window').width;
 
 class AlbumList extends Component {
 
@@ -8,17 +11,30 @@ class AlbumList extends Component {
 
   componentWillMount() {
     axios.get('https://storybebi-179314.firebaseio.com/albums/1/movies/.json?format=export')
-      .then(response => this.setState({state: response.data}))
+      .then(response => this.setState({albums: response.data}))
+  }
+
+  renderAlbums() {
+    return this.state.albums.map(album =>
+      <AlbumDetail key={album.title} album={album}/>
+    )
   }
 
   render() {
     console.log('this.state', this.state)
 
     return (
-      <View>
-        <Text>AlbumList</Text>
-      </View>
+      <ScrollView style={styles.scrollViewStyle}>
+        {this.renderAlbums()}
+      </ScrollView>
     )
+  }
+}
+
+const styles = {
+  scrollViewStyle: {
+    // stretch full screen
+    alignSelf: 'stretch'
   }
 }
 
