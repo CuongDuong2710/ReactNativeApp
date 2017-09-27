@@ -2,8 +2,8 @@ SECTION 11: DIGGING DEEPER WITH REDUX
 
 Lecture 79 The Basics of REDUX
 
-Reducer: it is a function that produces some amount of data.
-Action: is a plain javascript object that tells the reducer how to modify its data. The action only has one requirement.
+Reducer: it is a function that produces some amount of data. Reducers rerun many times throughout the application and each time they are called ('state first argument') they are past result of last time.
+Action: is a plain javascript object that tells the reducer how to modify its data. The action only has one requirement. The 'payload' property is the data that we want to communicate to the reducer.
 State: is our applications data. Everything form the value of each input field to knowing whether user authenticated, list of data to series of picture... puts to our state
 Store: is what holds the reducers in the application state.
 
@@ -11,8 +11,25 @@ When we pass an action to the dispatch method, it gets send to all the reducers 
 Our reducer will then immediately rerun.
 
 More importantly it creates an entirely new array which is the requirement that we must satisfy redux inside reducer.
-The golden rule we always return brand new objects from reducers.
+** The golden rule we always return brand new objects from reducers.
 
+** One big rule of reducers whenever we change our state object, we must return a completely new object or new array or whatever data structure.
+In other words, we do not mutate our data. // ex: state.push(action.payload)
+
+
+==============================
+Need very simple definition of Redux?
+
+John
+· a year ago
+Redux is a way of managing or abstracting state change away from components. If you recall on the previous projects, we we using a lot of this.setState() in each component, which is fine and will work without Redux. 
+The problem becomes that as applications get larger and more complex, and as the number of components increase, you would have state constantly being manipulated from various components
+ which can have some adverse affects if you aren't rigidly keeping track of what is happening to state and which component the state change is coming from. 
+ Redux, allows us to pull direct manipulation to state away from the components and into a centralized system of action creators, actions, and reducers. 
+ That way, if something unexpected occurs to your state object, you don't need to go digging through all your components to find where the unexpected behavior is coming from and in what order, 
+ you just need to look at what actions are being called by each component and look at what your reducers are returning from those actions. At least, that's what I've gathered so far about Redux...
+ 
+ 
 ==============================
 EXAMPLE
 
@@ -26,6 +43,10 @@ https://stephengrider.github.io/JSPlaygrounds/
 const reducer = (state = [], action ) => {
   if (action.type === 'split') {
     return action.payload.split('')
+  } else if (action.type === 'add_character') {
+    return [... state, action.payload] // return completely new array ***
+	// state.push(action.payload) // don't mutate the state ***
+    // return state;
   }
   
   return state
@@ -51,42 +72,14 @@ store.dispatch(action) //{"type":"split","payload":"asdf"}
 // ["a","s","d","f"]
 store.getState()
 
-
-==============================
-const reducer = (state = [], action ) => {
-	if (action.type === 'split_string') {
-  	return action.payload.split('');
-  } else if (action.type === 'add_character') {
-    return [...state, action.payload];
-    //state.push(action.payload);
-  	//return state;
-  }
-  
-  return state;
-};
-
-// Store contains reducer
-const store = Redux.createStore(reducer);
-
-store.getState();
-
-const action = { 
-  type: 'split_string',
-  payload: 'asdf' 
-};
-
-store.dispatch(action);
-
-store.getState();
-
 const action2 = {
- 	type: 'add_character',
+  type: 'add_character',
   payload: 'a'
 }
 
-store.dispatch(action2);
+store.dispatch(action2)
 
-store.getState();
+store.getState()
 
 ==============================
 ***// Install redux and react-redux
