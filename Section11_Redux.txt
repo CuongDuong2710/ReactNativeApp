@@ -4,7 +4,7 @@ Lecture 79 The Basics of REDUX
 
 Reducer: it is a function that produces some amount of data.
 Action: is a plain javascript object that tells the reducer how to modify its data. The action only has one requirement.
-State: is our applications data.
+State: is our applications data. Everything form the value of each input field to knowing whether user authenticated, list of data to series of picture... puts to our state
 Store: is what holds the reducers in the application state.
 
 When we pass an action to the dispatch method, it gets send to all the reducers that are hooked up to our store.
@@ -12,6 +12,45 @@ Our reducer will then immediately rerun.
 
 More importantly it creates an entirely new array which is the requirement that we must satisfy redux inside reducer.
 The golden rule we always return brand new objects from reducers.
+
+==============================
+EXAMPLE
+
+https://stephengrider.github.io/JSPlaygrounds/
+
+
+// Reducers are always called with two arguments:
+// 1. The current state that it has produced.
+// 2. The action
+
+const reducer = (state = [], action ) => {
+  if (action.type === 'split') {
+    return action.payload.split('')
+  }
+  
+  return state
+}
+
+// store an object that holds our application state and reducers
+// Error: Expected the reducer to be a function.
+// reducer will be run and the return is our application state
+
+const store = Redux.createStore(reducer)
+
+store.getState()
+
+const action = {
+  type: 'split',
+  payload: 'asdf'
+}
+
+// I want take this action and push it into the reducer (see diagram)
+
+store.dispatch(action) //{"type":"split","payload":"asdf"}
+
+// ["a","s","d","f"]
+store.getState()
+
 
 ==============================
 const reducer = (state = [], action ) => {
