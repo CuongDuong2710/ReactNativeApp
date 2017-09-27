@@ -1,0 +1,101 @@
+Lecture 92. ListView in Practice
+
+// In 'LibraryList.js'
+
+    componentWillMount() {
+        const ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
+        this.dataSource = ds.cloneWithRows(this.props.libraries);
+    }
+	
+	renderRow(library) {
+        return <ListItem library={library} />
+    }
+	
+	
+	render() {
+		return(
+			<ListView
+				dataSource={this.dataSource}
+				renderRow={this.renderRow}
+			/>
+		);
+    }
+	
+const mapStateToProps = state => {
+    return { libraries: state.libraries };
+    //console.log(state);
+};
+	
+=======================================================================
+Lecture 94. Styling the List
+
+// Clase 'ListItem'
+class ListItem extends Component {
+
+    render() {
+
+        const { titleStyle } = styles;
+
+        return(
+            <CardSection>
+                <Text style={titleStyle}>
+                    {this.props.library.title}
+                </Text>
+            </CardSection>
+        );
+    }
+}
+	
+// Two set of curly braces. One is for JSX and the inner one is for to designate a javascript object
+	<View style={{ flex: 1 }}>
+	
+=======================================================================
+Lecture 96. Introducing Action Creator
+
+// An action is a plain javascript object that has a type property.
+// This type property can be thought of as like a command or a direction like an instruction to be passed off the reducer.
+
+// So how exactly do we create or dispatch an action from inside of a component.
+// The purpose of the 'Action Creator' is to just exactly as the name suggests create an action.
+
+// Create 'index.js' file in 'actions' folder
+
+export const selectLibrary = (libraryId) => {
+    return {
+        type: 'select_library',
+        payload: libraryId
+    };
+};
+
+=======================================================================
+Lecture 97. Introducing Action Creator
+
+*** IMPORTANT// In 'ListItem.js' import actions. Because I have many different creators and I might want to use them all over the place in different components for different things.
+
+import * as actions from '../actions';
+
+
+// First argument is 'mapStateToProps', we don't have so is 'null'.
+
+export default connect(null, actions)(ListItem);
+
+// Remember only touchable components can receive top events.
+
+
+=======================================================================
+Lecture 98. Adding a Touchable
+
+// We really don't need to show a highlights or a fancy opacity change nothing like that.
+
+<TouchableWithoutFeedback
+                onPress={() => this.props.selectLibrary(id)}
+            >
+// Console log in 'SelectionReducer.js'
+export default (state, action) => {
+    console.log(action);
+    return null;
+}
+

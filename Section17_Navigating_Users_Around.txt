@@ -1,0 +1,200 @@
+Lecture 125. Dealing with Navigation
+
+
+npm install --save react-native-router-flux@3.35.0
+
+=========================================================================
+react-native start --reset-cache --verbose
+
+// Fix error can't resolve module after install react-native-router-flux@3.35.0
+I was able to get it to build properly after receiving "cant resolve module" error:
+
+I changed my version to "react-native-router-flux": "^3.41.0"
+
+Did a npm update
+
+Deleted my node_modules folder
+
+Did a npm install.
+
+=========================================================================
+
+Lecture 134. Employee Form Actions
+
+Let's make some action creators to handle a user changing the value of name or phone.
+
+// Boilerplate
+
+const INITIAL_STATE = {};
+
+export default (state = INITIAL_STATE, action) => {
+    switch(action.type) {
+        default:
+            return state;
+    }
+};
+
+// We hook up our 'EmployeeFromReducer' to our combined reducers call and then hook the whole thing up to our actual form component.
+// Make sure we pass these values, name or phone respective input. Make sure that my input knows that it is.
+// If the name of the key and the value are the same we can condense it down to just a single word.
+
+=========================================================================
+
+Lecture 137. Picker Component
+
+Alt + Shift: multiple cursors
+
+// expand picker to fill area
+style={{ flex: 1 }}
+
+// Make use this prop 'style' that I'm passing to the cardsection
+<CardSection style={{ flexDirection: 'column' }}>
+
+
+// 'props' may be a prop of style, additional styles that were passed in the 'props' object, override.
+const CardSection = (props) => {
+        return (
+        <View style={styles.containerStyle}>
+            {props.children}
+        </View>
+    );
+};
+
+=========================================================================
+Lecture 141. Data security in Firebase
+
+{
+  "rules": {
+		"users": {
+      "$uid": {
+       	".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+
+// We're going to create an event handler on the button 'Create' whenever it is pressed we will call an action creator.
+// And this action creator will attempt to save our data the firebase. If it is sucessful we will navigate the user back to the employee list screen.
+***ERROR// "Actions must be plain objects. Use custom middleware for async actions" => action creator is not actually returning an action.
+
+=========================================================================
+Lecture 143. Successful Data Save To Firebase
+
+export const employeeCreate = ({ name, phone, shift }) => {
+    const { currentUser } = firebase.auth();
+
+    //firebase.database().ref('/users/userId/employees');
+    firebase.database().ref(`/users/${currentUser.uid}/employees`)
+        .push({ name, phone, shift });
+};
+
+=========================================================================
+Lecture 145. Fetching data from Firebase
+
+// So if we pass an option type reset that's going to tell our navigation library that we want to go the employee list but don't have 'Back' button to creation employee form.
+// 'snapshot': It is an object that describes the data that we could get access to.
+
+=========================================================================
+Lecture 146. Storing Data by ID
+
+// Add a new reducer to receive this list of employees.
+*** ERROR // Unable resolved 'EmployeeReducer' => add '.js' name
+
+
+// r1 & r2 are two rows that are being compared, the old one and the new one. If they are not the same the rowHasChanged.
+
+***IMPORTANT// Remember that any time any piece of state updates the 'connect' helper at the bottom will rerun 'mapStateToProps'. 
+// And our component is going to get some new number of props right like we pull off our state object.
+
+// 'componentWillReceivedProps()' will be called whenever we are about to receive a new set of props to rerun for the component with.
+
+*** // User enter create employee form. Component 'EmployeeList' will be unmounted so will not be shown anymore. When comeback to employee list, a new instance of employee list will be created.
+
+
+
+// We will fetch the new list of data, but remember we already have loaded up all of our employees and they're still sitting in our global state object.
+// So we move all code create datasource into 'componentWillReceivedProps' and 'componentWillMount' to update new list data.
+
+createDataSource({ employess }) {
+	const ds = new ListView.DataSource({
+				rowHasChanged: (r1, r2) => r1 !== r2
+			 });
+
+	this.dataSource = ds.cloneWithRows(this.props.employees);
+}
+
+=========================================================================
+Lecture 148. Transforming Objects to Arrays
+
+// Lodash
+npm install --save lodash
+
+// Last step putting them into an array, map executes the federal function on every record
+// and then takes all of the returned objects and stuffs them into an array
+
+const mapStateToProps = state => {
+    const employees = _.map(state.employees, (val, uid) => {
+        return { ...val, uid }; // { shift: 'Monday', name: 's', id: '1j2ksj'}
+    });
+
+    return { employees };
+};
+
+// Render is responsible for rendering a singular row of our of our list.
+
+***ERROR
+Z:\reactnative\manager\node_modules\react-native\Libraries\Core\ExceptionsManager.js:65 Cannot read property 'rowIdentities' of undefined
+
+Failed prop type: The prop `dataSource` is marked as required in `ListView`, but its value is `undefined`.
+
+
+***IMPORTANT// Why this.renderItem doesn't have () at the end if that's a helper method?
+
+// Hi Giedrius,
+//this.renderItem  is a callback that will get invoked for each item.  React Native calls this function internally.  Having a () at the end of it would invoke it immediately, causing an error, and it couldn't be invoked again.
+
+***IMPORTANT - Lecture 94 (Advanced) - More on Welcome screen Navigation
+
+// 'this.props.onComplete'  not any parentheses. This is supposed to be a function right here. We only want to call this
+  // at some point in the future.
+  // If we add () that means the callback will be called the instant that the button is rendered which is of course not what we want.
+
+***ERROR
+// componentWillReceiveProps(nextProps) not componentWillReceivedProps(nextProps)
+
+
+
+=========================================================================
+Lecture 156. Clearing Form Attributes
+
+// Our form reducer holds all of the form state ant that form state is being used in multiple places now both edit form and create form.
+
+
+
+npm install --save react-native-communications
+
+// cyclial dependencies. You just import the stuff directly that you want.
+// So in this case I want to pass text to confirm as like you know a little child entry.
+
+<Text>{children}</Text>
+
+// That means we're going to need to receive the children property out of the prop's object.
+
+const Confirm = ({ children }) => {
+...
+};
+
+// Iam not immediately invoking it by not passing the braches on the end, that means we are passing a reference to the function.
+
+// HOw much space is placed in between each line of text.
+lineHeight: 40
+
+// Our background color is black (0, 0, 0) and 0.75 means give us an opacity of three quarters.
+backgroundColor: 'rgba(0, 0, 0, 0.75)'
+
+// I will add an employeeCreate as an action creator to be bound to the component.
+
+export default connect(mapStateToProps, {
+    employeeUpdate, employeeSave, employeeDelete
+})(EmployeeEdit);

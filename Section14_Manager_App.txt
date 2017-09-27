@@ -1,0 +1,208 @@
+SECTION 14. Not Done Yet...
+
+// Install 'react-redux' and 'redux' library
+
+npm install --save react-redux redux
+
+// 'Provider' tag connects to all those different connect tags that we scatter about our application.
+// And 'Provider' tag make sure that all those connect tags can get access to the store, grab our redux state and then pass it off to individual components.
+
+=========================================
+Lecture 107. More on Boilerplate App
+
+// Remember inside of all redux applications you must provide at least one default reducer
+// Install firebase
+
+npm install --save firebase
+
+
+***// ERROR
+Z:\reactnative\manager>npm install --save firebase
+manager@0.0.1 Z:\reactnative\manager
+`-- (empty)
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.1.1 (node_modules\j
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents
+
+npm ERR! Error: EPERM: operation not permitted, rename 'Z:\reactnative\manager\
+
+=> turn off antivirus software
+
+Z:\reactnative\manager>npm install --save firebase
+manager@0.0.1 Z:\reactnative\manager
+`-- firebase@4.2.0
+  +-- base64url@2.0.0
+  +-- buffer-equal-constant-time@1.0.1
+  +-- dom-storage@2.0.2
+  +-- ecdsa-sig-formatter@1.0.9
+  +-- faye-websocket@0.9.3
+  +-- hoek@2.16.3
+  +-- isemail@1.2.0
+  +-- joi@6.10.1
+  +-- jsonwebtoken@7.4.1
+  +-- jwa@1.1.5
+  +-- jws@3.1.4
+  +-- lodash.once@4.1.1
+  +-- moment@2.18.1
+  +-- ms@2.0.0
+  +-- promise-polyfill@6.0.2
+  +-- safe-buffer@5.1.1
+  +-- topo@1.1.0
+  +-- websocket-driver@0.6.5
+  +-- websocket-extensions@0.1.1
+  +-- xmlhttprequest@1.8.0
+  `-- xtend@4.0.1
+  
+*** IMPORTANT - 'local.properties' is not push on GitHub. It's local file. When clone project to local, we must add this file to project
+  
+=========================================
+*** IMPORTANT -- Lecture 110. Handling Form Updates with Action Creator
+
+1. User types something
+2. Call an action creator with this new text remember. How we invoke some change in site or application.
+3. Action creator will create an action with the new text in a very specific action type.
+4. That action is sent to all the different reducers in our application.
+5. Each reducers will calculate a new application state.
+6. Redux is going to take the output from each producer that we have.
+7. It's going to send that to all different components. All components will be rendered with new state.
+8. We just sit back and wait for the changes. We wait for the user to type another character in which case we repeat the entire process all over again.
+
+=========================================
+Lecture 111. Wiring Up Action Creators
+
+*** Remove arrow-body-style in '.eslintrc' file
+{
+	"extends": "rallycoding",
+	"rules": {
+		"arrow-body-style": 0
+	}
+}
+
+=========================================
+Lecture 112. Typed Actions
+
+*** IMPORTANT // This stream '/actions/index.js' is forming an incredibly strong link between this action and to reducer '/reducers/AuthReducer.js'. 
+// Make sure that there's like no typos (lỗi đánh chữ) in there whatsoever.
+// In '/actions/index.js' declared 'email_changed' -> 'email_change'. So my reducer is never going to properly pick up on this action when it's dispatch.
+*** // Solve this issue the convention the redux community is to make variables to hold our acions tight
+// Create new file 'actions/types.js' :
+
+export const EMAIL_CHANGED = 'email_changed';
+
+*** // When import variables action make sure exactly name
+
+import { EMAIL_CHANGED } from '../actions/types';
+
+=========================================
+*** IMPORTANT - Lecture 113. Immutable State
+
+// Somehow update our state object and then return it from this line right here. The question is how do we update our state object.
+
+AuthReducer.js
+
+export default (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case EMAIL_CHANGED:
+			// <right-here>
+        default:
+            return state;
+    }
+};
+
+// <Picture> Real key here is this triple equals comparison here in the middle.
+
+=========================================
+*** IMPORTANT - Lecture 114. Creating Immutable State
+
+const INITIAL_STATE = { email: '' };
+
+return {...state, email: action.payload}
+
+// Take all of the properties of my existing state object and throw them into that object, then define the property 'email' given the value of 'action.payload'
+// and toss it on top of whatever properties are on that state object. It is going to overwrite the existing property on the state object.
+// '{' we create a new object right here so we made a brand new object. We took all the values of the state object and threw them right in there.
+// User inputs 'stephen@gmail.com' -> action.payload = 'stephen@gmail.com'
+// '...state' is going to come across as email empty string. We're then going to throw on top of it email with a value of 'stephen@gmail.com'
+// It is going to overwrite the existing property on the state object. We made a new object return this from the reducer. Redux is going to say: 'Aha, I see that you have a new value here'
+// A new object is allocated in memory and they are not equal. Therefore redux knows that we actually change something.
+
+
+email: state.auth.email
+
+// So remember that 'mapStateToProps' function is how we end up getting some piece of state into our component.
+// Our job is return the property that we care about from that 'state' object.
+// 'auth' that is the value that we assigned or reduce in our 'combineReducers' in 'reducers/index.js'
+  
+  
+=========================================
+Lecture 117. Introduction Redux Thunk
+
+// '{}' expect object has email and password property
+
+export const loginUser = ({ email, password }) => {
+    
+};
+
+// Redux Thunk handle any type of asynchronous action creators
+
+npm install --save redux-thunk
+-- redux-thunk@2.2.0
+
+1. Action creators are function
+2. Must return a function
+3. This function will be called with 'dispatch' an action to all our different reducers
+
+=========================================
+Lecture 118. Redux Thunk Practice
+
+// Middleware is what allows us to take the middleware Intel redux to actually make use of this thing.
+_ src/App.js
+
++import { createStore, applyMiddleware } from 'redux';
++import ReduxThunk from 'redux-thunk';
+
+const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
+
+_ src/actions/index.js: dispatch function
+
+ export const loginUser = ({ email, password }) => {
+-    firebase.auth().signInWithEmailAndPassword(email, password)
++    return (dispatch) => {
++        firebase.auth().signInWithEmailAndPassword(email, password)
+         .then(user => console.log(user));
++    }
+ };
+ 
+=========================================
+Lecture 119. Redux Thunk Practice
+
+// We are not actually calling dispatch until the request 'signInWithEmailAndPassword' is complete.
+
+export const loginUser = ({ email, password }) => {
+    return (dispatch) => {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(user => {
+            dispatch({ type: 'LOGIN_USER_SUCCESS', payload: user});
+        });
+    }
+};
+
+// By using redux thunk we expand the range of values that we can return from an action creator, can return a function from an action creator.
+// 'dispatch' is a method and allow us to manually send an action to all of the reducers. By using this we can do whatever async action we want in.
+// It give us a ton of control and power over what is going on inside of our application.
+
+=========================================
+Lecture 120. Making LoginUser more Robust
+
+***// What are the properties that we want to update when every successfully logs in?
+// We return a new state object, take all the existing properties on our state object and also include action payload which is our user.
+
+_ AuthReducer.js:
+
+        case LOGIN_USER_SUCCESS:
+            return {...state, user: action.payload};
+ 
+
+
+ 

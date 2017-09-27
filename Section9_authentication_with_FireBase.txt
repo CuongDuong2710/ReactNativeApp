@@ -1,0 +1,139 @@
+Lecture 56. A Common Root Component
+
+// And remember the one requirement of our class based components it must ennoblement a render method
+
+*** ERROR// > SDK location not found. Define location with sdk.dir in the local.properties file or with an ANDROID_HOME environment variable.
+
+=> You have to just copy your local.properties file to the folder where project is stored and it will work like charm. But remember, it must be placed in the root folder where the project is stored.
+
+*** ERROR// Application <name> has not been registered.
+
+=> still running for the app you were working on before. Close node command line interface and run again.
+
+*** ERROR// Cannot find variable 'Component'
+
+=> import React, { Componet } from 'react';
+
+=================================================
+Lecture 57. Copying Reusable Component
+
+// Single line here this imports and exports the button component.
+export * from './Button';
+
+// Export an object with a key a button and a value of the actual component which is button
+export { Button: Button };
+
+// or
+export { Button };
+
+
+import { Header } from './components/common';
+
+=================================================
+Lecture 58. What is FireBase
+
+// Simply FireBase can be thought of as an online database that will connect directly to our app.
+// As we develop or publish our app we can connect to this online data store and be automatically notifield of any changes to our data by other users of our application.
+// It can also be used for analytics file storage or the feature that we're interested in right now authentication.
+
+
+=================================================
+Lecture 59. FireBase Client Setup
+
+// Install firebase in project
+
+Z:\reactnative\auth> npm install --save firebase
+
+Error: EPERM: operation not permitted, rename...
+
+npm cache clean
+
+*** IMPORTAND// Lifecycle methods are methods that are automatically invoked inside of our component.
+
+componentWillMount() {
+        firebase.initializeApp({
+            apiKey: 'AIzaSyAYD79kjLJbiouUys-kCE2NVhT2TDD-juQ',
+            authDomain: 'authentication-f44bc.firebaseapp.com',
+            databaseURL: 'https://authentication-f44bc.firebaseio.com',
+            projectId: 'authentication-f44bc',
+            storageBucket: 'authentication-f44bc.appspot.com',
+            messagingSenderId: '165536103909'
+        });
+}
+
+
+Z:\reactnative\auth>adb devices
+List of devices attached
+emulator-5554   device
+
+=================================================
+Lecture 62. Handling User Inputs
+
+// import 'TextInput'
+import { View, TextInput } from 'react-native';
+
+<CardSection>
+    <TextInput style={{ height: 50, width: 300 }} />
+</CardSection>
+
+=================================================
+Lecture 63. More Handling User Inputs
+
+state = { text: '' };
+
+<TextInput
+    value={this.state.text}
+	onChangeText={text => this.setState({text})};
+    style={{ height: 50, width: 300 }}
+/>
+
+=================================================
+Lecture 64. Making Text Inputs From Scratch
+
+const Input = ({ label }) => {
+    return (
+        <View>
+            <Text>{label}</Text>
+        </View>
+    );
+};
+
+
+// How much space is in between each line of text
+lineHeight: 23
+
+=================================================
+Lecture 66. Making the Inputs Pretty
+
+<View style={containerStyle}>
+            <Text style={labelStyle}>{label}</Text>
+            <TextInput
+                style={inputStyle}
+                value={value}
+                onChangeText={onChangeText}
+                style={{ height:50, width: 300 }}
+            />
+        </View>
+		
+// The 'input' and 'text' are children of the 'View' tag.
+// They're siblings of each other might be a better way of putting it.
+// Whenever we have siblings with a flex property designated on the style objects, the flex property is how we allocate or a propotion availabe space to each one.
+// Two plus one that totals three. Two thirds of the available space for input and one divided by third or one third for label
+inputStyle: {
+        ...
+        flex: 2
+    },
+    labelStyle: {
+        ...
+        flex: 1
+    },
+
+	
+autoCorrect={false}
+
+// So take the text and set it on a proper email
+state = { email: '' };
+onChangeText={text => this.setState({ email: text})}
+	
+
+

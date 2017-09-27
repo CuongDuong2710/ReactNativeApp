@@ -1,0 +1,201 @@
+SECTION 11: DIGGING DEEPER WITH REDUX
+
+Lecture 79 The Basics of REDUX
+
+Reducer: it is a function that produces some amount of data.
+Action: is a plain javascript object that tells the reducer how to modify its data. The action only has one requirement.
+State: is our applications data.
+Store: is what holds the reducers in the application state.
+
+When we pass an action to the dispatch method, it gets send to all the reducers that are hooked up to our store.
+Our reducer will then immediately rerun.
+
+More importantly it creates an entirely new array which is the requirement that we must satisfy redux inside reducer.
+The golden rule we always return brand new objects from reducers.
+
+==============================
+const reducer = (state = [], action ) => {
+	if (action.type === 'split_string') {
+  	return action.payload.split('');
+  } else if (action.type === 'add_character') {
+    return [...state, action.payload];
+    //state.push(action.payload);
+  	//return state;
+  }
+  
+  return state;
+};
+
+// Store contains reducer
+const store = Redux.createStore(reducer);
+
+store.getState();
+
+const action = { 
+  type: 'split_string',
+  payload: 'asdf' 
+};
+
+store.dispatch(action);
+
+store.getState();
+
+const action2 = {
+ 	type: 'add_character',
+  payload: 'a'
+}
+
+store.dispatch(action2);
+
+store.getState();
+
+==============================
+***// Install redux and react-redux
+npm install --save redux react-redux
+
+==============================
+Lecture 83 More on Redux Boilerplate
+
+//The provider tag works together with the store. Each of them has a very specific job.
+//So the store is what actually holds our application state (state 1, state 2, state 3, state 4). You know like all the data within our application.
+//The purpose of the provider on the other hand is whate translates all data into that store into something that can be used by the react side of our application (App).
+//=> so the store is the thing that holds our state while every provider is communication with react.
+
+//Redux was not designed to only work with react.
+
+//This 'react-redux' library is the communication glue between redux and react. So it makes them play nicely together.
+
+import React from 'react';
+import { View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
+
+const App = () => {
+
+    return (
+        <Provider store={createStore(reducers)}>
+            <View/>
+        </Provider>
+    );
+};
+
+export default App;
+
+// Create './src/reducers' folder and index.js
+
+import { combineReducers } from 'redux';
+
+export default combineReducers({
+    libraries: () => []
+});
+
+
+==============================
+Lecture 84 Rendering the Header
+
+// Remember that the provider tag is what servers as glue between the redux side of our application and the react side.
+
+
+==============================
+Lecture 88. The Connect Function
+
+// How to get this library's piece of data, this library piece of state from up here and push it down into our library list.
+// We want to get something from our store down into this child's component right here. We need to forge a connection between the store and the library list.
+// We're going to use what is called a connect helper that connects right here is a feature of that react redux library.
+// In 'LibraryList.js'
+
+import { connect } from 'react-redux';
+
+export default connect()(LibraryList);
+
+// Two process 
+// First, connect() get called and returns a function.
+// Then, we immediately call that function with the library list to set process.
+// connect(LibraryList, ...)
+
+
+==============================
+***IMPORTANT// Lecture 90. A Quick Review and Breather
+
+// 1.
+// First when our first boots up read x creates a new store right with that create store call using libraries reducer.
+// The instant the store is created it runs this reducer one time. So we get a piece of state called libraries which is an array containing a list of objects.
+// The reducer ifself when it runs returns that array of objects and each object represents one library.
+
+// 2.
+// Next, after we create the store we pass it to the provider as a prop where it's going to sit for the rest of the lifespan of our application.
+// The provider is a react component that aids in communication between react and redux.
+
+//3.
+// Next, the 'app' component is rendered to the screen which is turn renders the library list component.
+
+// The 'Connect' function which we just added in that connect help right here boots up. It reaches back up to the provider and says: "Hey please give me access to whatever your current state, let me know your status".
+
+// The provider gives up the state and the Connect pumps it down into the library list after filtering through 'mapStateToProps'
+// 'mapStateToProps' will show up as 'props' down into library list.
+// The 'mapStateToProps' runs and it returns an object like whatever it contains whatever properties whatever values whatever data is then passed as 'props' to the library list.
+
+***//  Our redux application first boots up it will automatically run all the registerd reducers 
+<Provider store={createStore(reducers)}>
+
+==============================
+***IMPORTANT// Lecture 99. Rule Of Reducer
+
+// 'SelectionReducer.js'
+// If this argument right here is undefined we should instead default it to the value of NULL. I don't have a selected library right now.
+
+
+export default (state = null, action) =>
+
+
+==============================
+***IMPORTANT// Lecture 100. Expanding A Row
+
+// When I wired up the reducer to my application I assigned 'SelectionReducer' to the 'selectedLibraryId' property
+// 'index.js' at folder 'reducers'
+
+export default combineReducers({
+    libraries: LibraryReducer,
+    selectedLibraryId: SelectionReducer
+});
+
+// So in 'ListItem.js' declare 'mapStateToProps' return 'selectedLibraryId'
+
+const mapStateToProps = state => {
+    return { selectedLibraryId: state.selectedLibraryId };
+};
+
+// Compare 'library.id' with 'selectedLibraryId' to expand row
+
+    renderDescription() {
+        const { library, selectedLibraryId } = this.props;
+
+        if (library.id == selectedLibraryId) {
+            return (
+                <Text>{library.description}</Text>
+            );
+        }
+    }
+	
+==============================
+***IMPORTANT// Lecture 101. Moving Logic Out of Components
+
+// So in 'ListItem.js', move logic code out component and declare in 'mapStateToProps' by 'expanded'
+
+const mapStateToProps = (state, ownProps) => {
+    const expanded = state.selectedLibraryId === ownProps.library.id;
+    return { expanded };
+};
+
+// And in 'renderDescription' reuse 'expanded'
+
+renderDescription() {
+        const { library, expanded } = this.props;
+
+        if (expanded) {
+            return (
+                <Text>{library.description}</Text>
+            );
+        }
+    }
