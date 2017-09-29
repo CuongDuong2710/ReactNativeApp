@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Linking, Image, FlatList, WebView } from 'react-native'
+import { View, Text, Linking, Image, FlatList } from 'react-native'
 import { List, ListItem, Button } from 'react-native-elements'
-import { Actions } from 'react-native-router-flux'
 import Card from './Card'
 import CardSection from './CardSection'
 
 class Movies extends Component {
   
   keyExtractor = (item) => item.title
-
-  playVideo = (item) => {
-    console.log('item', item)
-  }
 
   renderItem = ({item}) => {
     return (
@@ -20,11 +15,7 @@ class Movies extends Component {
         avatar={{uri: item.imageUrl}}
         title={item.title}
         subtitle={item.length}
-        onPress={() => {
-          console.log('item', item.videoUrl) 
-          Linking.openURL(item.videoUrl)
-          }
-        }
+        onPress={() => Linking.openURL(item.videoUrl)}
       />
     )
   }

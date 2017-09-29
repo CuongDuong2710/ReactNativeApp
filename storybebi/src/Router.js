@@ -2,11 +2,10 @@ import React from 'react'
 import { Scene, Router, Actions } from 'react-native-router-flux'
 import Home from './components/Home'
 import Movies from './components/Movies'
-import Youtube from './components/Youtube'
 
 const RouterComponent = () => {
   return (
-    <Router sceneStyle={{ paddingTop: 10 }}>
+    <Router sceneStyle={{ paddingTop: 30 }}>
       <Scene key="main">
         <Scene 
           key="home"
@@ -17,12 +16,6 @@ const RouterComponent = () => {
           key="movies"
           component={Movies}
           title="Danh sách video"/>
-
-        <Scene
-          key="youtube"
-          component={Youtube}
-          title="Phát video"
-        />
 
       </Scene>
     </Router>
