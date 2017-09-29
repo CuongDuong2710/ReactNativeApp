@@ -10,13 +10,13 @@ class AlbumList extends Component {
   state = { albums: [] }
 
   componentWillMount() {
-    axios.get('https://storybebi-179314.firebaseio.com/albums/1/movies/.json?format=export')
+    axios.get('https://storybebi-179314.firebaseio.com/albums.json?format=export')
       .then(response => this.setState({albums: response.data}))
   }
 
   renderAlbums() {
     return this.state.albums.map(album =>
-      <AlbumDetail key={album.title} album={album}/>
+      <AlbumDetail key={album.album} album={album}/>
     )
   }
 

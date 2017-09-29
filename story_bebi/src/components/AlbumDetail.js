@@ -7,13 +7,15 @@ import Button from './Button'
 class AlbumDetail extends Component {
   
   render() {
-    const { title, videoUrl, imageUrl } = this.props.album
+    const { album, imageUrl, language, movies } = this.props.album
     const { 
       headerContentStyle,
       headerTextStyle,
       thumbnailStyle,
       thumbnailContainerStyle
     } = styles
+
+    console.log('movies:', movies)
 
     return (
       <Card>
@@ -25,11 +27,11 @@ class AlbumDetail extends Component {
             />
           </View>
           <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>{title}</Text>
+            <Text style={headerTextStyle}>{album}</Text>
           </View>
         </CardSection>
         <CardSection>
-          <Button onPress={() => Linking.openURL(videoUrl)}>
+          <Button>
             Watching Now!!!
           </Button>
         </CardSection>
