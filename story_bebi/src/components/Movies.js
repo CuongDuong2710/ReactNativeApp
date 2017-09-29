@@ -21,7 +21,6 @@ class Movies extends Component {
         title={item.title}
         subtitle={item.length}
         onPress={() => {
-          console.log('item', item.videoUrl) 
           Linking.openURL(item.videoUrl)
           }
         }
