@@ -4,33 +4,10 @@
  * @flow
  */
 
-import React, { Component } from 'react';
 import {
-  AppRegistry,
-  Text,
-  View
-} from 'react-native';
-import Header from './src/components/Header'
-import AlbumList from './src/components/AlbumList'
+  AppRegistry
+} from 'react-native'
 
-export default class story_bebi extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header headerText="Albums"/>
-        <AlbumList />
-      </View>
-    );
-  }
-}
+import App from './src/App'
 
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  }
-};
-
-AppRegistry.registerComponent('story_bebi', () => story_bebi);
+AppRegistry.registerComponent('story_bebi', () => App);
