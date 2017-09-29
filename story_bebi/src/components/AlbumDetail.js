@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { View, Text, Image, Linking } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import CardSection from './CardSection'
 import Card from './Card'
 import Button from './Button'
 
 class AlbumDetail extends Component {
+
+  // navigator list movies
+  onRowPress() {
+    Actions.movies({ movies: this.props.album.movies })
+  }
   
   render() {
     const { album, imageUrl, language, movies } = this.props.album
@@ -15,7 +21,7 @@ class AlbumDetail extends Component {
       thumbnailContainerStyle
     } = styles
 
-    console.log('movies:', movies)
+    // console.log('movies:', movies)
 
     return (
       <Card>
@@ -31,8 +37,8 @@ class AlbumDetail extends Component {
           </View>
         </CardSection>
         <CardSection>
-          <Button>
-            Watching Now!!!
+          <Button onPress={this.onRowPress.bind(this)}>
+            Go!!!
           </Button>
         </CardSection>
       </Card>
