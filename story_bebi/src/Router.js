@@ -10,12 +10,12 @@ const RouterComponent = () => {
         <Scene 
           key="home"
           component={Home}
-          title="Albums"/>
+          title="Thể loại"/>
 
         <Scene
           key="movies"
           component={Movies}
-          title="Movies"/>
+          title="Danh sách video"/>
 
       </Scene>
     </Router>

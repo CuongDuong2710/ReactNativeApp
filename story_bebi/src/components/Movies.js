@@ -1,36 +1,22 @@
 import React, { Component } from 'react'
 import { View, Text, Linking, Image, FlatList } from 'react-native'
+import { List, ListItem, Button } from 'react-native-elements'
 import Card from './Card'
 import CardSection from './CardSection'
-import Button from './Button'
 
 class Movies extends Component {
   
   keyExtractor = (item) => item.title
 
   renderItem = ({item}) => {
-    const { thumbnailContainerStyle, thumbnailStyle, headerContentStyle, headerTextStyle } = styles
-
     return (
-      <Card>
-        <CardSection>
-          <View style={thumbnailContainerStyle}>
-            <Image
-              style={thumbnailStyle}
-              source={{ uri: item.imageUrl }}
-            />
-          </View>
-          <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>{item.title}</Text>
-            <Text>{item.length}</Text>
-          </View>
-        </CardSection>
-        <CardSection>
-          <Button onPress={() => Linking.openURL(item.videoUrl)}>
-            Watching now!!!
-          </Button>
-        </CardSection>
-      </Card>
+      <ListItem 
+        roundAvatar
+        avatar={{uri: item.imageUrl}}
+        title={item.title}
+        subtitle={item.length}
+        onPress={() => Linking.openURL(item.videoUrl)}
+      />
     )
   }
 
@@ -38,11 +24,13 @@ class Movies extends Component {
     console.log('this.props.movies', this.props.movies)
 
     return (
-      <FlatList
-        data= {this.props.movies}
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
-      />
+      <List>
+        <FlatList
+          data= {this.props.movies}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+        />
+      </List>
     )
   }
 }

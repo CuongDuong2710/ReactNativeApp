@@ -38,7 +38,7 @@ class AlbumDetail extends Component {
         </CardSection>
         <CardSection>
           <Button onPress={this.onRowPress.bind(this)}>
-            Go!!!
+            Xem danh sách
           </Button>
         </CardSection>
       </Card>
