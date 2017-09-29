@@ -5,7 +5,7 @@ import Movies from './components/Movies'
 
 const RouterComponent = () => {
   return (
-    <Router sceneStyle={{ paddingTop: 30 }}>
+    <Router sceneStyle={{ paddingTop: 10 }}>
       <Scene key="main">
         <Scene 
           key="home"

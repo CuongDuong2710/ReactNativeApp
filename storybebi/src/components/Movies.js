@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import { View, Text, Linking, Image, FlatList } from 'react-native'
 import { List, ListItem, Button } from 'react-native-elements'
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from "expo"
 import Card from './Card'
 import CardSection from './CardSection'
+
+const ADUNITID = `ca-app-pub-2267083612728588/6133498163`;
+
+AdMobInterstitial.setTestDeviceID("EMULATOR");
+console.disableYellowBox = true;
 
 class Movies extends Component {
   
@@ -24,13 +35,24 @@ class Movies extends Component {
     console.log('this.props.movies', this.props.movies)
 
     return (
-      <List>
-        <FlatList
-          data= {this.props.movies}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-        />
-      </List>
+      <View>
+        <View>
+          <AdMobBanner
+            bannerSize="fullBanner"
+            adUnitID={ADUNITID}
+            didFailToReceiveAdWithError={this.bannerError}
+          />
+        </View>
+        <View style={{marginTop: 30}}>
+          <List>
+            <FlatList
+              data= {this.props.movies}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+            />
+          </List>
+        </View>
+      </View>
     )
   }
 }
