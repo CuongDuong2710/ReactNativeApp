@@ -88,6 +88,7 @@ npm install --save redux react-redux
 ==============================
 Lecture 83 More on Redux Boilerplate
 
+*** See picture diagram 'Lecture83_MoreOn_Redux_BoilerPlate'
 //The provider tag works together with the store. Each of them has a very specific job.
 //So the store is what actually holds our application state (state 1, state 2, state 3, state 4). You know like all the data within our application.
 //The purpose of the provider on the other hand is whate translates all data into that store into something that can be used by the react side of our application (App).
