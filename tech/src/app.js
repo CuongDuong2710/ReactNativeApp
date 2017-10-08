@@ -5,6 +5,9 @@ import { createStore } from 'redux'
 import reducers from './reducers'
 import { Header } from './components/common'
 
+/**
+ * creating App with Provider wrap up store and reducers
+ */
 const App = () => {
   return (
     <Provider store={createStore(reducers)}>
