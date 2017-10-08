@@ -129,6 +129,13 @@ Lecture 84 Rendering the Header
 
 // Remember that the provider tag is what servers as glue between the redux side of our application and the react side.
 
+==============================
+Lecture 85. Reducer and State Design
+
+*** See picture diagram 'Lecture 85. Reducer and State Design'
+We have two seperate pieces of state inside this reducer.
+_ List of libraries
+_ Currently selected library
 
 ==============================
 Lecture 88. The Connect Function
