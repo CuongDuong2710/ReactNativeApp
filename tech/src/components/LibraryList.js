@@ -21,6 +21,10 @@ class LibraryList extends Component {
     this.dataSource = ds.cloneWithRows(this.props.libraries)
   }
 
+  /**
+   * Rendering single row
+   * @param {*} library is the element in the list that it is trying to currently render at ListView
+   */
   renderRow(library) {
     <ListItem library={library}/>
   }
