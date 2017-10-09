@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ListView } from 'react-native'
+import { FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import ListItem from './ListItem'
 
@@ -10,33 +10,32 @@ import ListItem from './ListItem'
  * We use 'connect' helper: glue between redux and react, a component to the redux store. Help component know application state (Give me state)
  */
 class LibraryList extends Component {
+
   /**
-   * Building list view
+   * Tells the list to use the ids for the react keys
+   * @param item single item in FlatList. It will be automatically creating in FlatList
+   * @param index index of single item.
    */
-  componentWillMount() {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 != r2
-    })
-    // sending list of libraries to list view
-    this.dataSource = ds.cloneWithRows(this.props.libraries)
-  }
+  _keyExtractor = (item, index) => item.id
 
   /**
    * Rendering single row
-   * @param {*} library is the element in the list that it is trying to currently render at ListView. 
-   * It is passed automatically by the ListView component. 
    */
-  renderRow(library) {
-    return <ListItem library={library}/>
+  _renderItem = ({item}) => {
+    return <ListItem library={item}/>
   }
 
+  /**
+   * Rendering list of tech stack
+   */
   render(){
     // So we clearly have our data inside this component
     // console.log('this.props', this.props)
     return (
-      <ListView 
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
+      <FlatList
+        data={this.props.libraries}
+        keyExtractor={this._keyExtractor}
+        renderItem={this._renderItem}
       />
     );
   }

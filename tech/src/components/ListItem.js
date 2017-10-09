@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import { CardSection } from './common'
 
 class ListItem extends Component {
   render() {
     const { titleStyle } = styles;
+    // console.log('this.props', this.props)
 
     return (
       <CardSection>
@@ -22,3 +23,7 @@ const styles = {
 }
 
 export default ListItem
+
+// console.log('this.props', this.props)
+// this.props {library: {…}} 
+// library: {id: 0, title: "Webpack", description: "Webpack is a module bundler. It packs CommonJs/AMD… multiple bundles, which can be loaded on demand."}
