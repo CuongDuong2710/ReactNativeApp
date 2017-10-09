@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducers from './reducers'
 import { Header } from './components/common'
+import LibraryList from './components/LibraryList'
 
 /**
  * creating App with Provider wrap up store and reducers
@@ -13,6 +14,7 @@ const App = () => {
     <Provider store={createStore(reducers)}>
       <View>
         <Header headerText="Tech Stack"/>
+        <LibraryList />
       </View>
     </Provider>
   )

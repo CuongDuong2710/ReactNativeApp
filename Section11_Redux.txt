@@ -158,19 +158,24 @@ export default connect()(LibraryList);
 ==============================
 ***IMPORTANT// Lecture 90. A Quick Review and Breather
 
-// 1.
+--> 1. Create a Store
+
 // First when our first boots up read x creates a new store right with that create store call using libraries reducer.
 // The instant the store is created it runs this reducer one time. So we get a piece of state called libraries which is an array containing a list of objects.
 // The reducer ifself when it runs returns that array of objects and each object represents one library.
 
-// 2.
+--> 2. Passing Store to Provider
+
 // Next, after we create the store we pass it to the provider as a prop where it's going to sit for the rest of the lifespan of our application.
 // The provider is a react component that aids in communication between react and redux.
 
-//3.
+--> 3. Rendering app component, connect() helper asking Provider about new state
+
 // Next, the 'app' component is rendered to the screen which is turn renders the library list component.
 
 // The 'Connect' function which we just added in that connect help right here boots up. It reaches back up to the provider and says: "Hey please give me access to whatever your current state, let me know your status".
+
+--> 4. Provider gives new state to app component
 
 // The provider gives up the state and the Connect pumps it down into the library list after filtering through 'mapStateToProps'
 // 'mapStateToProps' will show up as 'props' down into library list.

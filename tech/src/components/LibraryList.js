@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
 
 /**
@@ -9,8 +10,33 @@ import { connect } from 'react-redux'
  */
 class LibraryList extends Component {
   render(){
-    return;
+    // So we clearly have our data inside this component
+    // console.log('this.props', this.props)
+    return (
+      <View />
+    )
   }
 }
 
-export default connect()(LibraryList)
+/**
+ * Taking our global state (in our redux store) and mapping some properties of that state object
+ * and provide them as props to our component 'LibraryList'
+ * @param {*} state app's global state
+ */
+const mapStateToProps = state => {
+  // return an object will show up as props to my component
+  // console.log('state: ', state)
+  return { libraries: state.libraries }
+}
+
+export default connect(mapStateToProps)(LibraryList)
+
+// console.log('state: ', state)
+// state:  {libraries: Array(9)}
+//           libraries:Array(9)
+//             0:{id: 0, title: "Webpack", description: "Webpack is a module bundler. It packs CommonJs/AMD… multiple bundles, which can be loaded on demand."}
+//             1:{id: 1, title: "React", description: "React makes it painless to create interactive UIs.…just the right components when your data changes."}
+
+
+// console.log('this.props', this.props)
+// this.props {libraries: Array(9), dispatch: ƒ}
