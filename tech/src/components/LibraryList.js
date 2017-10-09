@@ -23,10 +23,11 @@ class LibraryList extends Component {
 
   /**
    * Rendering single row
-   * @param {*} library is the element in the list that it is trying to currently render at ListView
+   * @param {*} library is the element in the list that it is trying to currently render at ListView. 
+   * It is passed automatically by the ListView component. 
    */
   renderRow(library) {
-    <ListItem library={library}/>
+    return <ListItem library={library}/>
   }
 
   render(){
@@ -37,7 +38,7 @@ class LibraryList extends Component {
         dataSource={this.dataSource}
         renderRow={this.renderRow}
       />
-    )
+    );
   }
 }
 
