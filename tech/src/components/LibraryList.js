@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, ListView } from 'react-native'
 import { connect } from 'react-redux'
 
 /**
@@ -9,11 +9,29 @@ import { connect } from 'react-redux'
  * We use 'connect' helper: glue between redux and react, a component to the redux store. Help component know application state (Give me state)
  */
 class LibraryList extends Component {
+  /**
+   * Building list view
+   */
+  componentWillMount() {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 != r2
+    })
+    // sending list of libraries to list view
+    this.dataSource = ds.cloneWithRows(this.props.libraries)
+  }
+
+  renderRow() {
+    
+  }
+
   render(){
     // So we clearly have our data inside this component
     // console.log('this.props', this.props)
     return (
-      <View />
+      <ListView 
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
     )
   }
 }
