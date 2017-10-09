@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, ListView } from 'react-native'
 import { connect } from 'react-redux'
+import ListItem from './ListItem'
 
 /**
  * See 'Lecture88_The_Connect_Function.jpg'
@@ -20,8 +21,8 @@ class LibraryList extends Component {
     this.dataSource = ds.cloneWithRows(this.props.libraries)
   }
 
-  renderRow() {
-    
+  renderRow(library) {
+    <ListItem library={library}/>
   }
 
   render(){
