@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import { Text } from 'react-native'
 import { CardSection } from './common'
 
+/**
+ * Rendering single item of Flatlist.
+ * Needing to get access our redux state to expand selected item.
+ * By comparing the value of selected library with 'this.props.library.Id'
+ */
 class ListItem extends Component {
   render() {
     const { titleStyle } = styles;
