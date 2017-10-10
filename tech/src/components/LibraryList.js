@@ -13,7 +13,7 @@ class LibraryList extends Component {
 
   /**
    * Tells the list to use the ids for the react keys
-   * @param item single item in FlatList. It will be automatically creating in FlatList
+   * @param item single item in FlatList. It will be automatically created in FlatList
    * @param index index of single item.
    */
   _keyExtractor = (item, index) => item.id

@@ -1,7 +1,8 @@
 /**
- * Recording the current selected library by id. Assemble some anout of new application state
+ * Recording the current selected library by id. 
  * Remember reducers are always called with the state object that was returned the last time this reducer was executed
- * @param state set is null (if not state is undefined). I don't have a selected library right now
+ * @param state set is null (if not state is undefined). I don't have a selected library right now.
+ * Return: assemble some anout of new application state
  */
 export default (state = null, action) => {
   switch (action.type) {
