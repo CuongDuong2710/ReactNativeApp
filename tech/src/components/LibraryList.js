@@ -52,6 +52,9 @@ const mapStateToProps = state => {
   return { libraries: state.libraries }
 }
 
+/**
+ * Connect is using for mapping global state to this components props.
+ */
 export default connect(mapStateToProps)(LibraryList)
 
 // console.log('state: ', state)
