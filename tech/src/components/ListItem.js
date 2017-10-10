@@ -14,9 +14,9 @@ class ListItem extends Component {
    * Expanded selected row by comparing this row's Id with selected Id
    */
   renderDescription() {
-    const { library, selectedLibraryId } = this.props
+    const { library, expanded } = this.props
 
-    if (library.id === selectedLibraryId) {
+    if (expanded) {
       return (
         <Text>{library.description}</Text>
       )
@@ -52,11 +52,15 @@ const styles = {
   }
 }
 
-const mapStateToProps = (state) => {
-  // 2. console.log('ListItem -> state', state)
-  return {
-    selectedLibraryId: state.selectedLibraryId
-  }
+/**
+ * Taking our global state and provide them as props in this component
+ * @param {*} state global app state
+ * @param {*} ownProps are the props that were passed to the component we're wrapping (ListItem). It exactly equals to 'this.props'
+ */
+const mapStateToProps = (state, ownProps) => {
+  // comparing selected Id with this row's Id 
+  const expanded = state.selectedLibraryId === ownProps.library.id
+  return { expanded }
 }
 
 /**
