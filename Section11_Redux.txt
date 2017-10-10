@@ -185,6 +185,15 @@ export default connect()(LibraryList);
 <Provider store={createStore(reducers)}>
 
 ==============================
+***IMPORTANT// Lecture 97. Calling action creators
+
+1. Calling action creator
+
+import * as actions from '../actions'
+
+2. Import connect helper from react-redux to call action creator
+
+==============================
 ***IMPORTANT// Lecture 99. Rule Of Reducer
 
 // 'SelectionReducer.js'

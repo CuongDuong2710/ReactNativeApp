@@ -4,8 +4,6 @@
  * @param state set is null (if not state is undefined). I don't have a selected library right now
  */
 export default (state = null, action) => {
-  console.log('SelectionReducer state', state)
-  console.log('SelectionReducer action', action)
   switch (action.type) {
     case 'select_library':
       return action.payload
