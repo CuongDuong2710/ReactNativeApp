@@ -1,4 +1,5 @@
 /**
+ * Using export (not default)
  * Locate all action creator.
  * Whenever we call action creator they return to action will be automatically dispatched to us
  * and sent to all the different reducers.

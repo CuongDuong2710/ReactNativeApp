@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text } from 'react-native'
+import { connect } from 'react-redux'
 import { CardSection } from './common'
+import * as actions from '../actions'
 
 /**
  * Rendering single item of Flatlist.
@@ -10,7 +12,7 @@ import { CardSection } from './common'
 class ListItem extends Component {
   render() {
     const { titleStyle } = styles;
-    // console.log('this.props', this.props)
+    console.log('this.props', this.props)
 
     return (
       <CardSection>
@@ -27,7 +29,11 @@ const styles = {
   }
 }
 
-export default ListItem
+/**
+ * @param actions this says take these action creators you know in here as props
+ * 2nd argument (ListItem): bind action creators to this component
+ */
+export default connect(null, actions)(ListItem)
 
 // console.log('this.props', this.props)
 // this.props {library: {…}} 
